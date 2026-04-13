@@ -98,4 +98,57 @@ public class MovementPrinciples
         return repulsionForce;
     }
 
+    public static MovableDirection GetDirectionFromMoveVector(Vector2 movement)
+    {
+        const float deadzone = 0.1f;
+
+        if (movement.sqrMagnitude < deadzone * deadzone)
+            return MovableDirection.None;
+
+        // Vertical
+        if (Mathf.Abs(movement.y) >= Mathf.Abs(movement.x))
+        {
+            if (movement.y > 0f)
+                return MovableDirection.Up;
+            else
+                return MovableDirection.Down;
+        }
+        // Horizontal
+        else
+        {
+            if (movement.x > 0f)
+                return MovableDirection.Right;
+            else
+                return MovableDirection.Left;
+        }
+    }
+
+    public static string MovableDirectionToString(MovableDirection direction)
+    {
+        switch (direction)
+        {
+            case MovableDirection.None:
+                return "None";
+            case MovableDirection.Right:
+                return "Right";
+            case MovableDirection.Left:
+                return "Left";
+            case MovableDirection.Up:
+                return "Up";
+            case MovableDirection.Down:
+                return "Down";
+        }
+        return "None";
+    }
+
+    public enum MovableDirection
+    {
+        None,
+        Right,
+        Left,
+        Up,
+        Down
+    }
 }
+
+

@@ -16,7 +16,7 @@ public class GameState : ScriptableObject
     [SerializeField] private SceneAsset sceneAsset;
     #endif
 
-    [SerializeField, HideInInspector] private string sceneName;
+    [SerializeField, HideInInspector] private string sceneName = "";
 
     private void OnValidate()
     {

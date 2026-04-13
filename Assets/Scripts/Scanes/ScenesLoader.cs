@@ -6,6 +6,18 @@ public class ScenesLoader
 {
     public static async Task LoadScene(GameState gameState)
     {
+        if (gameState == null)
+        {
+            Debug.LogError("GameState is null. Cannot load scene.");
+            return;
+        }
+    
+        //  No need to load scene if GameState doesn't specify one
+        if (gameState.GetSceneName() == null || gameState.GetSceneName().Trim() == "")
+        {
+            return;
+        }
+
         string sceneToLoadName = gameState.GetSceneName();
         string currentSceneName = GetCurrentScene().name;
         if (currentSceneName == sceneToLoadName)

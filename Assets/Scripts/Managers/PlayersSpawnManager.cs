@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerSpawnManager : MonoBehaviour, IInitializable
@@ -21,18 +22,18 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
         Instance = this;
     }
 
-    public void Init()
+    public async Task Init()
     {
-        SpawnPlayers();
+        await SpawnPlayers();
     }
 
-    void SpawnPlayers()
+    async Task SpawnPlayers()
     {
-        SpawnPlayer(PlayerTag.Player1);
-        SpawnPlayer(PlayerTag.Player2);
+        await SpawnPlayer(PlayerTag.Player1);
+        await SpawnPlayer(PlayerTag.Player2);
     }
 
-    void SpawnPlayer(PlayerTag playerTag)
+    async Task SpawnPlayer(PlayerTag playerTag)
     {
         Vector3 spawnPosition = playerTag == PlayerTag.Player1 ? new Vector3(-2, 0, 0) : new Vector3(2, 0, 0);
         var player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
@@ -49,6 +50,8 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
             else
                 Player2 = playerController;
         }
+
+        await Task.Yield();
 
         var spriteRenderer = player.GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)

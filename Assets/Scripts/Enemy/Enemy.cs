@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(CapsuleCollider2D), typeof(EnemyHealth))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
@@ -9,15 +10,17 @@ public class Enemy : MonoBehaviour
     float separationStrength = 1.5f;
     Rigidbody2D rb;
     CapsuleCollider2D capsule;
+    EnemyHealth health;
 
     [SerializeField]
     float separationTimerInterval = 1f;
-    float separationTimer = 0f;
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         capsule = GetComponent<CapsuleCollider2D>();
+        health = GetComponent<EnemyHealth>();
+        health.OnDeath += Die;
     }
     Vector2 separationVector = Vector2.zero;
     Vector2 desiredVelocity = Vector2.zero;
@@ -59,4 +62,30 @@ public class Enemy : MonoBehaviour
     {
         return (true, attackCooldown);
     }
+
+    [ContextMenu("Kill")]
+    public void Die()
+    {
+        Debug.Log($"{gameObject.name} died.");
+        OnDeath?.Invoke();
+        Destroy(gameObject);
+    }
+
+    public void InitHealth(float health)
+    {
+        if (this.health == null)
+        {
+            Debug.LogError("EnemyHealth component is missing!");
+            return;
+        }
+        
+        this.health.Init(health);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health.TakeDamage(damage);
+    }
+
+    public event Action OnDeath;
 }

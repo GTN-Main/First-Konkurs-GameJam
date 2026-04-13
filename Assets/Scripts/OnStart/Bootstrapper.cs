@@ -29,11 +29,15 @@ public static class Bootstrapper
 
     async static Task Init()
     {
-        TryInit(GameManager.Instance);
-        TryInit(PlayerSpawnManager.Instance);
+        await TryInit(GameManager.Instance);
+        await TryInit(PlayerSpawnManager.Instance);
+        await TryInit(HealthManager.Instance);
+        await TryInit(EnemiesSpawnManager.Instance);
+        await TryInit(BoxesSpawnManager.Instance);
+        await TryInit(WaterContainerManager.Instance);
     }
     
-    static void TryInit(MonoBehaviour script)
+    static async Task TryInit(MonoBehaviour script)
     {
         if (script == null)
         {
@@ -43,7 +47,7 @@ public static class Bootstrapper
 
         if (script is IInitializable initializable)
         {
-            initializable.Init();
+            await initializable.Init();
         }
     }
 }

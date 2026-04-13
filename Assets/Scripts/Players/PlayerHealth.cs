@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private int maxHealth = 50;
-    private int currentHealth;
+    [SerializeField] private int maxHealth;
+    [SerializeField] private int currentHealth;
 
-    void Start()
+    public void Init(int maxHealth)
     {
+        this.maxHealth = maxHealth;
         currentHealth = maxHealth;
     }
 
@@ -27,10 +28,15 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = maxHealth;
         }
     }
-    
+
+    public int CurrentHealth => currentHealth;
+
     void Die()
     {
         // Handle player death (play animation, disable controls, etc.)
         Debug.Log("One player has died.");
+        OnPlayerDied?.Invoke();
     }
+    
+    public event System.Action OnPlayerDied;
 }

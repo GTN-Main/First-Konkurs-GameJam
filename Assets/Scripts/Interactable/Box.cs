@@ -12,6 +12,20 @@ public class Box : MonoBehaviour
     [SerializeField] float progressDecreaseSpeed = 0.1f;
     [SerializeField] float maxProgress = 1f;
 
+    [SerializeField] Animator boxAnimator;
+    [SerializeField] AnimationClip landAnimationClip;
+
+    private GameObject spawnPoint;
+    public void SetSpawnPoint(GameObject spawnPoint)
+    {
+        this.spawnPoint = spawnPoint;
+    }
+
+    public GameObject GetSpawnPoint()
+    {
+        return spawnPoint;
+    }
+
     void Start()
     {
         detectPlayerInRange = GetComponent<DetectPlayerInRange>();
@@ -94,10 +108,21 @@ public class Box : MonoBehaviour
         boxUI.GetTargetCanvas().SetActive(true);
         detectPlayerInRange.SetDetectionUsability(false);
         boxUI.SetText("Box Opened!");
+        onBoxOpened?.Invoke();
     }
+
+    public event System.Action onBoxOpened;
 
     void OnOpeningTryEnded()
     {
-        Debug.Log("Opening attempt ended. Implement any necessary logic here.");
+       // Debug.Log("Opening attempt ended. Implement any necessary logic here.");
+    }
+
+    public void BeginLandAnimation()
+    {
+        if (boxAnimator != null && landAnimationClip != null)
+        {
+            boxAnimator.Play(landAnimationClip.name);
+        }
     }
 }

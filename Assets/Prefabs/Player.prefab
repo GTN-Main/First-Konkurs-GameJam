@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 7801592737949719666}
   - component: {fileID: 700315779613275785}
   - component: {fileID: 8099508729816358708}
+  - component: {fileID: 5777471893317910328}
   m_Layer: 0
-  m_Name: Char2_1_0
+  m_Name: CharGirl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -762746081
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 3924068877380232693, guid: 1d682f8e17d0c424986e25d37d8d3534, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -101,7 +102,7 @@ Animator:
   m_GameObject: {fileID: 5925909969574040089}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 69d17ab322d42ab419721a61871721a8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 16db42fe41aa2ee489cc2b56bf3f0311, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -113,6 +114,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5777471893317910328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5925909969574040089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 208978548e61e614fb1f423615bf04e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGirlAnimationController
+  currentDirection: 0
+  UpWalk: {fileID: 7400000, guid: 82f209f15177dff44a5220f3e509140c, type: 2}
+  DownWalk: {fileID: 7400000, guid: 3d1564605c86c87459419620bf748117, type: 2}
+  LeftWalk: {fileID: 7400000, guid: 645c33aabbbf62947bec0de8bd586f15, type: 2}
+  RightWalk: {fileID: 7400000, guid: 6b0ec232d69c4d54f8add43f66f4d1bd, type: 2}
+  Stand: {fileID: 7400000, guid: 4a1ca80988b26fb4fa450d0834037449, type: 2}
+  rb: {fileID: 3039633047729713377}
+  velocityVector: {x: 0, y: 0}
 --- !u!1 &9139810659440188313
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,6 +147,9 @@ GameObject:
   - component: {fileID: 4464841798149689222}
   - component: {fileID: 3039633047729713377}
   - component: {fileID: 8530332127731767786}
+  - component: {fileID: 5105505523556791871}
+  - component: {fileID: 1255691650163776390}
+  - component: {fileID: 281992264141986565}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -194,7 +218,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -762746081
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
   m_Color: {r: 1, g: 0.5023564, b: 0, a: 1}
@@ -220,7 +244,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   playerTag: 0
-  speed: 10
+  speed: 5
+  isAttacking: 0
 --- !u!50 &3039633047729713377
 Rigidbody2D:
   serializedVersion: 5
@@ -285,3 +310,51 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!114 &5105505523556791871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9139810659440188313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2410f86e954e7154980104bc4bf5e5e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 0
+  currentHealth: 0
+--- !u!114 &1255691650163776390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9139810659440188313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9f25f14a6a1f544b1f87e30ac02c61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  granadePrefab: {fileID: 4152748242318136674, guid: 4db31e3303e0b384888a93a938508cee, type: 3}
+  randomDirectionRangeInDegrees: {x: -15, y: 15}
+  randomMovementDistanceMultiplierRange: {x: 0.7, y: 1.3}
+  attackCooldown: 2
+  maxAttackDistance: 5
+--- !u!114 &281992264141986565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9139810659440188313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9f25f14a6a1f544b1f87e30ac02c61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  granadePrefab: {fileID: 4152748242318136674, guid: 4db31e3303e0b384888a93a938508cee, type: 3}
+  randomDirectionRangeInDegrees: {x: -15, y: 15}
+  randomMovementDistanceMultiplierRange: {x: 0.7, y: 1.3}
+  attackCooldown: 2
+  maxAttackDistance: 5

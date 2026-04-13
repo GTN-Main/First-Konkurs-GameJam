@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour, IInitializable
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour, IInitializable
     {
         StartScreen,
         StartGame,
+        EndGame
     }
 
     void Awake()
@@ -26,7 +28,7 @@ public class GameManager : MonoBehaviour, IInitializable
     [SerializeField] private List<GameState> gameStates = new List<GameState>();
     public GameState currentGameState { get; private set; }
 
-    public void Init()
+    public async Task Init()
     {
         DebugUtility.WriteInColor($"Initializing game manager...", Color.green);
         gameStates = Resources.LoadAll<GameState>("GameStates/").ToList();
@@ -34,7 +36,7 @@ public class GameManager : MonoBehaviour, IInitializable
         ScenesLoader.LoadScene(currentGameState);
     }
 
-    public void ChangeGameState(GameStateTag newGameStateTag)
+    public async Task ChangeGameState(GameStateTag newGameStateTag)
     {
         GameState newGameState = gameStates.First(state => state.GetTag() == newGameStateTag);
         if (newGameState == null)
@@ -46,6 +48,25 @@ public class GameManager : MonoBehaviour, IInitializable
         DebugUtility.WriteInColor($"Changing game state to '{newGameStateTag}'", Color.green);
 
         currentGameState = newGameState;
-        ScenesLoader.LoadScene(currentGameState);
+        await ScenesLoader.LoadScene(currentGameState);
+        OnGameStateChanged?.Invoke(currentGameState);
     }
+
+    public GameStateTag GetCurrentGameStateTag() => currentGameState?.GetTag() ?? GameStateTag.StartScreen;
+
+    public void StartGame()
+    {
+        DebugUtility.WriteInColor($"Starting game...", Color.green);
+        ChangeGameState(GameStateTag.StartGame);
+    }
+
+    public void EndGame()
+    {
+        DebugUtility.WriteInColor($"Ending game...", Color.red);
+        ChangeGameState(GameStateTag.EndGame);
+    }
+
+    public static bool CanPlayersReturnToEndArea() => WaterContainerManager.Instance.IsWaterLevelFull();
+
+    public event System.Action<GameState> OnGameStateChanged;
 }

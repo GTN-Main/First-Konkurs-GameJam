@@ -5,7 +5,7 @@ public class StartScreenButtonsFunctions : MonoBehaviour
     public void OnPlayButtonClick()
     {
         Debug.Log("Play button clicked!");
-        GameManager.Instance.ChangeGameState(GameManager.GameStateTag.StartGame);
+        GameManager.Instance.StartGame();
     }
 
     public void OnSettingsButtonClick()

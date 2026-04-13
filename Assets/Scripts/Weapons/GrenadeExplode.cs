@@ -1,0 +1,117 @@
+using System.Collections;
+using System.Threading.Tasks;
+using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
+public class GrenadeExplode : MonoBehaviour
+{
+    [SerializeField] private float explosionRadius = 5f;
+    [SerializeField] private float explosionDamage = 50f;
+    [SerializeField] private float explosionDelay = 2f;
+    [SerializeField] Vector2 movementVector = Vector2.zero;
+    [SerializeField] private float movementDistance = 5f;
+    [SerializeField] private float movementTime = 5f;
+    [SerializeField] private LayerMask damageableLayers;
+    [SerializeField] private Transform maxRadiusImageT;
+    [SerializeField] private Transform fillImageT;
+    [SerializeField] private Vector2 aspectRatioSize;
+    [SerializeField] AnimationCurve moveOverTimeCurve;
+
+    Rigidbody2D rb;
+
+    public void Init(Vector2 position, float explosionRadius, float explosionDamage, float explosionDelay, Vector2 movementVector, float movementDistance, float movementTime, LayerMask damageableLayers)
+    {
+        rb = GetComponent<Rigidbody2D>();
+        transform.position = position;
+        this.explosionRadius = explosionRadius;
+        this.explosionDamage = explosionDamage;
+        this.explosionDelay = explosionDelay;
+        this.movementVector = movementVector;
+        this.movementDistance = movementDistance;
+        this.movementTime = movementTime;
+        this.damageableLayers = damageableLayers;
+    }
+
+    public void Run()
+    {
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
+        StartCoroutine(MoveRoutine());
+        Explode();
+        VisualizeExplosionRadius();
+    }
+
+    IEnumerator MoveRoutine()
+    {
+        float elapsedTime = 0f;
+        Vector2 startPosition = transform.position;
+        Vector2 targetPosition = startPosition + movementVector.normalized * movementDistance;
+        Debug.Log($"Moving grenade from {startPosition} to {targetPosition} over {movementTime} seconds.");
+
+        rb.WakeUp();
+
+        while (elapsedTime < movementTime)
+        {
+            elapsedTime += Time.fixedDeltaTime;
+
+            float t = Mathf.Clamp01(elapsedTime / movementTime);
+            float curveT = moveOverTimeCurve.Evaluate(t);
+
+            Vector2 newPosition = Vector2.Lerp(startPosition, targetPosition, curveT);
+
+            rb.MovePosition(newPosition);
+            Debug.Log($"Moving grenade to {newPosition} with velocity {rb.linearVelocity}");
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        rb.MovePosition(targetPosition);
+    }
+
+
+    async Task Explode()
+    {
+        await Task.Delay(Mathf.RoundToInt(explosionDelay * 1000));
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
+        foreach (Collider2D hitCollider in hitColliders)
+        {
+            EnemyHealth enemyHealth = hitCollider.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(explosionDamage);
+            }
+        }
+        // add particle effect
+        Destroy(gameObject);
+    }
+
+    async Task VisualizeExplosionRadius()
+    {
+        if (maxRadiusImageT == null)
+        {
+            Debug.LogError("Max radius object is null");
+        }
+
+        if (fillImageT == null)
+        {
+            Debug.LogError("Fill object is null");
+        }
+
+        float elapsedTime = 0f;
+        float maxDiameter = explosionRadius * 2f;
+
+        maxRadiusImageT.localScale = Vector2.one * aspectRatioSize * maxDiameter;
+
+        while (elapsedTime < explosionDelay)
+        {
+            float t = elapsedTime / explosionDelay;
+            float currentDiameter = Mathf.Lerp(0f, maxDiameter, t);
+
+            fillImageT.localScale = Vector2.one * aspectRatioSize * currentDiameter;
+            elapsedTime += Time.deltaTime;
+            await Task.Yield();
+        }
+    }
+}

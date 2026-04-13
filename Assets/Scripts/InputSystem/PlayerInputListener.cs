@@ -72,11 +72,13 @@ public class PlayerInputData
     InputActionMap _action;
     InputAction move_action;
     InputAction interact_action;
+    InputAction attack_action;
     public void SetActionMap(InputActionMap Action)
     {
         _action = Action;
         move_action = _action?.FindAction("Move");
         interact_action = _action?.FindAction("Interact");
+        attack_action = _action?.FindAction("Attack");
     }
 
 
@@ -90,5 +92,9 @@ public class PlayerInputData
 
     #region Interaction properties
     public bool interact => interact_action != null ? interact_action.IsPressed() : false;
+    #endregion
+
+    #region Attack properties
+    public bool attack => attack_action != null ? attack_action.IsPressed() : false;
     #endregion
 }
