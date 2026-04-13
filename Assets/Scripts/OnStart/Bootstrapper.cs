@@ -30,6 +30,7 @@ public static class Bootstrapper
     async static Task Init()
     {
         TryInit(GameManager.Instance);
+        TryInit(PlayerSpawnManager.Instance);
     }
     
     static void TryInit(MonoBehaviour script)

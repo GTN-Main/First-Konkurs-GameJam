@@ -5,7 +5,7 @@ public class OnClickSwithScene : MonoBehaviour
 {
     void Start()
     {
-        var clickAction = InputManager.Instance.CurrentMap.FindAction("Click");
+        var clickAction = InputManager.Instance.CurrentMap_global.FindAction("Click");
         if (clickAction != null)
         {
             clickAction.performed += OnMouseDown;
@@ -14,7 +14,7 @@ public class OnClickSwithScene : MonoBehaviour
     
     void OnMouseDown(InputAction.CallbackContext context)
     {
-        var clickAction = InputManager.Instance.CurrentMap.FindAction("Click");
+        var clickAction = InputManager.Instance.CurrentMap_global.FindAction("Click");
         if (clickAction != null)
         {
             clickAction.performed -= OnMouseDown;
