@@ -3,15 +3,38 @@ using UnityEngine;
 
 public class FasolkaAnimationController : MovableAnimationController
 {
-    [SerializeField] MovementPrinciples.MovableDirection currentDirection = MovementPrinciples.MovableDirection.None;
-    [SerializeField] AnimationClip UpWalk, DownWalk, LeftWalk, RightWalk;
-    [SerializeField] AnimationClip UpAttack, DownAttack, LeftAttack, RightAttack;
-    [SerializeField] Rigidbody2D rb;
-    [SerializeField] Vector2 velocityVector;
-    [SerializeField] SpriteRenderer mainBodySpriteRenderer;
-    [SerializeField] Sprite[] variants_front;
-    [SerializeField] Sprite[] variants_back;
-    [SerializeField] int variantIndex = 0;
+    [SerializeField]
+    MovementPrinciples.MovableDirection currentDirection = MovementPrinciples.MovableDirection.None;
+
+    [SerializeField]
+    AnimationClip UpWalk,
+        DownWalk,
+        LeftWalk,
+        RightWalk;
+
+    [SerializeField]
+    AnimationClip UpAttack,
+        DownAttack,
+        LeftAttack,
+        RightAttack;
+
+    [SerializeField]
+    Rigidbody2D rb;
+
+    [SerializeField]
+    Vector2 velocityVector;
+
+    [SerializeField]
+    SpriteRenderer mainBodySpriteRenderer;
+
+    [SerializeField]
+    Sprite[] variants_front;
+
+    [SerializeField]
+    Sprite[] variants_back;
+
+    [SerializeField]
+    int variantIndex = 0;
     bool isGameOver = false;
     float attackButtonHold = 0f;
     float maxAttackHoldTime = 2f;

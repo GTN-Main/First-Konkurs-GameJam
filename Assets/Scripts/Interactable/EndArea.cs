@@ -13,12 +13,24 @@ public class EndArea : MonoBehaviour
     [SerializeField]
     private float timeToFill = 3f;
 
-    [SerializeField] private GameObject canvasEndArea;
-    [SerializeField] private Slider sliderEndArea;
-    [SerializeField] private Image sliderFill;
-    [SerializeField] Color colorSlider, colorEndScreen;
-    [SerializeField] private SpriteRenderer flowerImage;
-    [SerializeField] private Sprite[] statesOfFlower;
+    [SerializeField]
+    private GameObject canvasEndArea;
+
+    [SerializeField]
+    private Slider sliderEndArea;
+
+    [SerializeField]
+    private Image sliderFill;
+
+    [SerializeField]
+    Color colorSlider,
+        colorEndScreen;
+
+    [SerializeField]
+    private SpriteRenderer flowerImage;
+
+    [SerializeField]
+    private Sprite[] statesOfFlower;
 
     void Start()
     {
@@ -49,9 +61,10 @@ public class EndArea : MonoBehaviour
             return;
         }
 
-        int index = Mathf.FloorToInt(percentageToEnd * (statesOfFlower.Length+1));
-        if (index == 0) flowerImage.sprite = null;
-        index = Mathf.Clamp(index-1, 0, statesOfFlower.Length - 1);
+        int index = Mathf.FloorToInt(percentageToEnd * (statesOfFlower.Length + 1));
+        if (index == 0)
+            flowerImage.sprite = null;
+        index = Mathf.Clamp(index - 1, 0, statesOfFlower.Length - 1);
         flowerImage.sprite = statesOfFlower[index];
     }
 

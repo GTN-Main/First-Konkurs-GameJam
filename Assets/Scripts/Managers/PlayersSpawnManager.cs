@@ -5,8 +5,10 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
 {
     [SerializeField]
     GameObject playerPrefabGirl;
+
     [SerializeField]
-    Color player1Color = Color.blue, player2Color = Color.red;
+    Color player1Color = Color.blue,
+        player2Color = Color.red;
 
     public PlayerController Player1,
         Player2;
@@ -29,7 +31,7 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
         {
             Debug.LogError("Player prefab for PlayerGirl is not assigned in the inspector.");
         }
-        
+
         if (playerPrefabFasolka == null)
         {
             Debug.LogError("Player prefab for PlayerFasolka is not assigned in the inspector.");
@@ -49,8 +51,13 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
 
     async Task SpawnPlayer(PlayerTag playerTag)
     {
-        Vector3 spawnPosition = playerTag == PlayerTag.Player1 ? new Vector3(-2, 0, 0) : new Vector3(2, 0, 0);
-        var player = Instantiate(playerTag == PlayerTag.Player1 ? playerPrefabFasolka : playerPrefabGirl, spawnPosition, Quaternion.identity);
+        Vector3 spawnPosition =
+            playerTag == PlayerTag.Player1 ? new Vector3(-2, 0, 0) : new Vector3(2, 0, 0);
+        var player = Instantiate(
+            playerTag == PlayerTag.Player1 ? playerPrefabFasolka : playerPrefabGirl,
+            spawnPosition,
+            Quaternion.identity
+        );
         player.name = playerTag.ToString();
         player.layer = LayerMask.NameToLayer("Players");
         player.transform.SetParent(transform);
@@ -70,7 +77,7 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
         {
             pGAC.SetPlayerTag(playerTag);
         }
-        
+
         /*var fAC = player.transform.GetChild(0).GetComponent<FasolkaAnimationController>();
         if (fAC != null)
         {

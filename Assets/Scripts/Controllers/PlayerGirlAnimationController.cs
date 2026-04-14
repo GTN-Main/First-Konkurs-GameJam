@@ -3,11 +3,28 @@ using UnityEngine;
 
 public class PlayerGirlAnimationController : MovableAnimationController
 {
-    [SerializeField]PlayerTag playerTag;
-    [SerializeField] MovementPrinciples.MovableDirection currentDirection = MovementPrinciples.MovableDirection.None;
-    [SerializeField] AnimationClip UpWalk, DownWalk, LeftWalk, RightWalk, Stand, UpAttack, DownAttack, LeftAttack, RightAttack;
-    [SerializeField] Rigidbody2D rb;
-    [SerializeField] Vector2 velocityVector;
+    [SerializeField]
+    PlayerTag playerTag;
+
+    [SerializeField]
+    MovementPrinciples.MovableDirection currentDirection = MovementPrinciples.MovableDirection.None;
+
+    [SerializeField]
+    AnimationClip UpWalk,
+        DownWalk,
+        LeftWalk,
+        RightWalk,
+        Stand,
+        UpAttack,
+        DownAttack,
+        LeftAttack,
+        RightAttack;
+
+    [SerializeField]
+    Rigidbody2D rb;
+
+    [SerializeField]
+    Vector2 velocityVector;
     bool isGameOver = false;
     bool isAttacking = false;
     bool lastAttackState = false;
@@ -99,7 +116,9 @@ public class PlayerGirlAnimationController : MovableAnimationController
             lastAttackState = isAttacking;
             if (isAttacking)
             {
-                ChangeAnim(MovementPrinciples.MovableDirectionToString(currentDirection) + "Attack");
+                ChangeAnim(
+                    MovementPrinciples.MovableDirectionToString(currentDirection) + "Attack"
+                );
             }
             else
             {
@@ -111,7 +130,6 @@ public class PlayerGirlAnimationController : MovableAnimationController
             currentDirection = movableDirection;
             ChangeAnim(MovementPrinciples.MovableDirectionToString(currentDirection));
         }
-        
 
         UpdateController();
     }

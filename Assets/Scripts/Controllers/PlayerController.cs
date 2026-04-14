@@ -8,8 +8,12 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     PlayerAttack pA;
     CapsuleCollider2D capsule;
-    [SerializeField] float speed = 1000f;
-    [SerializeField] bool isAttacking = false;
+
+    [SerializeField]
+    float speed = 1000f;
+
+    [SerializeField]
+    bool isAttacking = false;
     float attackButtonHoldTime = 0f;
     float maxAttackHoldTime = 0.2f;
 

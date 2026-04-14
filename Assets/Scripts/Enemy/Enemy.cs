@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     EnemyHealth health;
     EnemyAttack enemyAttack;
     EnemyMovementStateMachine movementStateMachine;
+
     [SerializeField]
     FasolkaAnimationController fasolkaAnimationController;
 
