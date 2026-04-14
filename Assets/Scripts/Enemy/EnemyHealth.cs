@@ -20,6 +20,7 @@ public class EnemyHealth : MonoBehaviour
             || GameManager.Instance.GetCurrentGameStateTag() == GameManager.GameStateTag.WonGame
         )
             return;
+        MyAudioEffects.Instance.DoEffect("HurtE", transform.position + Vector3.forward, 1f);
         currentHealth -= damage;
         if (currentHealth <= 0)
         {

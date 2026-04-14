@@ -36,6 +36,7 @@ public static class Bootstrapper
         await TryInit(BoxesSpawnManager.Instance);
         await TryInit(WaterContainerManager.Instance);
         await TryInit(MyParticleSystem.Instance);
+        await TryInit(MyAudioEffects.Instance);
     }
 
     static async Task TryInit(MonoBehaviour script)

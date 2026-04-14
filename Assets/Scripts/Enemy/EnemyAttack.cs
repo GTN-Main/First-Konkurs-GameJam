@@ -69,6 +69,7 @@ public class EnemyAttack : MonoBehaviour
             );
 
             paintball.Run();
+            MyAudioEffects.Instance.DoEffect("Throw", transform.position, 1f);
         }
         else
         {

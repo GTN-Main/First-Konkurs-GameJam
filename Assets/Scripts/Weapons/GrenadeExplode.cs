@@ -158,6 +158,7 @@ public class GrenadeExplode : MonoBehaviour
         if (mP == null)
             Debug.LogError("MyParticleSystem instance is null!");
         MyParticleSystem.Instance.DoEffect("Boom", transform.position, 1f);
+        MyAudioEffects.Instance.DoEffect("GrenadeExplosion", transform.position, 1f);
         Destroy(gameObject);
     }
 

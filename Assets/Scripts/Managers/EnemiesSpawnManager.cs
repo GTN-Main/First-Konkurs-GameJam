@@ -97,6 +97,11 @@ public class EnemiesSpawnManager : MonoBehaviour, IInitializable
         {
             canSpawn = false;
         }
+
+        if (state.GetTag() == GameManager.GameStateTag.LooseGame || state.GetTag() == GameManager.GameStateTag.WonGame)
+        {
+            spawnedEnemies.Clear();
+        }
     }
 
     public void NextWave()
@@ -108,6 +113,8 @@ public class EnemiesSpawnManager : MonoBehaviour, IInitializable
             currentWaveSize = Mathf.RoundToInt(currentWaveSize * nextWaveSizeGrowth);
 
         _enemiesToSpawn = currentWaveSize;
+        if (waveNumber > 0)
+            MyAudioEffects.Instance.DoEffect("NewWave", GameManager.Instance.GetCamera().transform.position+ Vector3.forward, 1f);
         waveNumber++;
     }
 

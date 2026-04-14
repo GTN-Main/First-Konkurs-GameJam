@@ -23,6 +23,7 @@ public class PlayerAttack : MonoBehaviour
     /// </summary>
     public bool DoAttack()
     {
+        MyAudioEffects.Instance.DoEffect("Throw", transform.position, 1f);
         if (Time.time - lastAttackTime < attackCooldown)
         {
             return false;

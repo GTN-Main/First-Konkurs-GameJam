@@ -5,6 +5,9 @@ TextureImporter:
   - first:
       213: -3836117382089732252
     second: Fasolka_0
+  - first:
+      213: 8827431828845143619
+    second: Fasolka_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -116,6 +119,28 @@ TextureImporter:
       name: Fasolka_0
       rect:
         serializedVersion: 2
+        x: 69
+        y: 1009
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46f07dbc09f53cac0800000000000000
+      internalID: -3836117382089732252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fasolka_1
+      rect:
+        serializedVersion: 2
         x: 0
         y: 0
         width: 650
@@ -128,8 +153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 46f07dbc09f53cac0800000000000000
-      internalID: -3836117382089732252
+      spriteID: 346aa458a76518a70800000000000000
+      internalID: 8827431828845143619
       vertices: []
       indices: 
       edges: []
@@ -149,6 +174,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Fasolka_0: -3836117382089732252
+      Fasolka_1: 8827431828845143619
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

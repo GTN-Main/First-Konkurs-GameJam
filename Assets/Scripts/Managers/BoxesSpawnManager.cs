@@ -80,10 +80,11 @@ public class BoxesSpawnManager : MonoBehaviour, IInitializable
         }
     }
 
-    public void NextWave()
+    public async Task NextWave()
     {
         isSpawnPointOccupied = new bool[spawnPoints.Length];
         _boxesToSpawn = startWaveSize;
+        await Task.Delay(2000); // Delay before starting the next wave
     }
 
     public void FindSpawnPoints()
@@ -137,7 +138,7 @@ public class BoxesSpawnManager : MonoBehaviour, IInitializable
                     Debug.Log($"Box {box.name} opened.");
                     spawnedBoxes.Remove(box);
                     Debug.Log($"Remaining boxes: {spawnedBoxes.Count}");
-                    MarkSpawnPointAsFree(box.GetSpawnPoint().transform, delay: 2000f); // Delay makes sure that the box is fully opened before another one can spawn at the same point
+                    MarkSpawnPointAsFree(box.GetSpawnPoint().transform, delay: 5000f); // Delay makes sure that the box is fully opened before another one can spawn at the same point
                     Destroy(box.gameObject, 2f);
                     WaterContainerManager.Instance.AddWaterRandom();
                 };
@@ -185,14 +186,17 @@ public class BoxesSpawnManager : MonoBehaviour, IInitializable
             {
                 return null;
             }
+            
+            spawnedBoxes = spawnedBoxes.Where(box => box != null).ToList(); // Clean up any null references
 
             Box closestBox = spawnedBoxes
                 .OrderBy(box => (box.transform.position - point).sqrMagnitude)
                 .FirstOrDefault();
             return closestBox != null ? closestBox.transform.position : null;
         }
-        catch
+        catch (System.Exception ex)
         {
+            DebugUtility.WriteInColor($"Error in GetClosestBoxPositionToPoint: {ex.Message}", Color.red);
             return null;
         }
     }

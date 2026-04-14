@@ -42,6 +42,21 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
         await SpawnPlayers();
     }
 
+    public void ResetPlayers()
+    {
+        if (Player1 != null)
+        {
+            Destroy(Player1.gameObject);
+            Player1 = null;
+        }
+        if (Player2 != null)
+        {
+            Destroy(Player2.gameObject);
+            Player2 = null;
+        }
+        _ = SpawnPlayers();
+    }
+
     async Task SpawnPlayers()
     {
         await SpawnPlayer(PlayerTag.Player1);

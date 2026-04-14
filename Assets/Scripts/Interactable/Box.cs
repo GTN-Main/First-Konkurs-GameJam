@@ -41,6 +41,7 @@ public class Box : MonoBehaviour
         boxProgressOpen = GetComponent<BoxProgressOpen>();
         boxUI = GetComponent<BoxUI>();
         detectPlayerInRange.SetDetectionUsability(true);
+        MyAudioEffects.Instance.DoEffect("BoxSpawn", transform.position, 1f);
     }
 
     void Update()
@@ -127,6 +128,7 @@ public class Box : MonoBehaviour
         detectPlayerInRange.SetDetectionUsability(false);
         boxUI.SetText("Box Opened!");
         onBoxOpened?.Invoke();
+        MyAudioEffects.Instance.DoEffect("BoxOpenSound", transform.position, 1f);
     }
 
     public event System.Action onBoxOpened;

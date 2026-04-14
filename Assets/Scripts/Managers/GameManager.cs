@@ -82,18 +82,22 @@ public class GameManager : MonoBehaviour, IInitializable
     {
         cC.enabled = false;
         DebugUtility.WriteInColor($"Ending game...", Color.red);
-        ChangeGameState(GameStateTag.WonGame);
+        await ChangeGameState(GameStateTag.WonGame);
+        MyAudioEffects.Instance.DoEffect("Won", mainCamera.transform.position, 1f);
         await Task.Delay(2000);
-        ChangeGameState(GameStateTag.EndScreenVictory);
+        await ChangeGameState(GameStateTag.EndScreenVictory);
+        PlayerSpawnManager.Instance.ResetPlayers();
     }
 
     public async Task LooseGame()
     {
         cC.enabled = false;
         DebugUtility.WriteInColor($"Players lost the game...", Color.red);
-        ChangeGameState(GameStateTag.LooseGame);
+        await ChangeGameState(GameStateTag.LooseGame);
+        MyAudioEffects.Instance.DoEffect("Loose", mainCamera.transform.position, 1f);
         await Task.Delay(2000);
-        ChangeGameState(GameStateTag.EndScreenDefeat);
+        await ChangeGameState(GameStateTag.EndScreenDefeat);
+        PlayerSpawnManager.Instance.ResetPlayers();
     }
 
     public void BackToStartScreen()

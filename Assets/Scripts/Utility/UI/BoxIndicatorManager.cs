@@ -32,6 +32,7 @@ public class BoxIndicatorManager : MonoBehaviour
 
     void OnEnable()
     {
+        indicatorRectTransform.gameObject.SetActive(false);
         AssignCamera();
     }
 
@@ -57,6 +58,10 @@ public class BoxIndicatorManager : MonoBehaviour
             if (targetPosition.HasValue)
             {
                 this.targetPosition = targetPosition.Value;
+            }
+            else
+            {
+                Debug.Log($"Is BoxIndicatorManager null? {BoxesSpawnManager.Instance == null} Is Camera null? {Camera.main == null} ");
             }
             timerToFindTargetBox = 0f;
         }

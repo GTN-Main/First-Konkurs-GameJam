@@ -148,7 +148,9 @@ public class Paintball : MonoBehaviour
             PlayerTag playerTag = pC.GetPlayerTag();
             HealthManager.Instance.DamagePlayer(playerTag, explosionDamage);
         }
-        // add particle effect
+        
+        MyAudioEffects.Instance.DoEffect("PaintExplosion", transform.position, 1f);
+
         Destroy(gameObject);
     }
 
