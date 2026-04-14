@@ -5,10 +5,8 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
 {
     [SerializeField]
     GameObject playerPrefabGirl;
-
     [SerializeField]
-    Color player1Color = Color.blue,
-        player2Color = Color.red;
+    GameObject playerPrefabFasolka;
 
     public PlayerController Player1,
         Player2;
@@ -78,11 +76,11 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
             pGAC.SetPlayerTag(playerTag);
         }
 
-        /*var fAC = player.transform.GetChild(0).GetComponent<FasolkaAnimationController>();
+        var fAC = player.transform.GetChild(0).GetComponent<PlayerFasolkaAnimationController>();
         if (fAC != null)
         {
             fAC.SetPlayerTag(playerTag);
-        }*/
+        }
 
         await Task.Yield();
     }
