@@ -128,9 +128,13 @@ public class HealthManager : MonoBehaviour, IInitializable
 
     public void DamagePlayer(PlayerTag playerTag, int damage)
     {
-        MyAudioEffects.Instance.DoEffect("HurtP", playerTag == PlayerTag.Player1 ?
-        PlayerSpawnManager.Instance.Player1.transform.position + Vector3.forward :
-        PlayerSpawnManager.Instance.Player2.transform.position + Vector3.forward, 1f);
+        MyAudioEffects.Instance.DoEffect(
+            "HurtP",
+            playerTag == PlayerTag.Player1
+                ? PlayerSpawnManager.Instance.Player1.transform.position + Vector3.forward
+                : PlayerSpawnManager.Instance.Player2.transform.position + Vector3.forward,
+            1f
+        );
         if (playerTag == PlayerTag.Player1)
         {
             player1Health.TakeDamage(damage);
