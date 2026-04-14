@@ -5,6 +5,7 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
 {
     [SerializeField]
     GameObject playerPrefabGirl;
+
     [SerializeField]
     GameObject playerPrefabFasolka;
 
