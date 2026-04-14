@@ -77,6 +77,15 @@ public class HealthManager : MonoBehaviour, IInitializable
         {
             HideHealthUI();
         }
+
+        if (state.GetTag() == GameManager.GameStateTag.WonGame)
+        {
+            player1Health.OnPlayerDied -= OnOnePlayerDied;
+            player2Health.OnPlayerDied -= OnOnePlayerDied;
+            player1Health = null;
+            player2Health = null;
+            opened = false;
+        }
     }
 
     public void ShowHealthUI()
@@ -120,7 +129,7 @@ public class HealthManager : MonoBehaviour, IInitializable
     public void DamagePlayer(PlayerTag playerTag, int damage)
     {
         MyAudioEffects.Instance.DoEffect("HurtP", playerTag == PlayerTag.Player1 ?
-        PlayerSpawnManager.Instance.Player1.transform.position + Vector3.forward : 
+        PlayerSpawnManager.Instance.Player1.transform.position + Vector3.forward :
         PlayerSpawnManager.Instance.Player2.transform.position + Vector3.forward, 1f);
         if (playerTag == PlayerTag.Player1)
         {
