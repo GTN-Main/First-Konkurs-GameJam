@@ -61,7 +61,9 @@ public class BoxIndicatorManager : MonoBehaviour
             }
             else
             {
-                Debug.Log($"Is BoxIndicatorManager null? {BoxesSpawnManager.Instance == null} Is Camera null? {Camera.main == null} ");
+                Debug.Log(
+                    $"Is BoxIndicatorManager null? {BoxesSpawnManager.Instance == null} Is Camera null? {Camera.main == null} "
+                );
             }
             timerToFindTargetBox = 0f;
         }

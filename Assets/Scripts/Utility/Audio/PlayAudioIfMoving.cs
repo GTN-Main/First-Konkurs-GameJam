@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class PlayAudioIfMoveing : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private AudioSource audioSourceObject;
+    [SerializeField]
+    private Rigidbody2D rb;
+
+    [SerializeField]
+    private AudioSource audioSourceObject;
 
     void Start()
     {
