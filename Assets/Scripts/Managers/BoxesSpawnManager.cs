@@ -186,7 +186,7 @@ public class BoxesSpawnManager : MonoBehaviour, IInitializable
             {
                 return null;
             }
-            
+
             spawnedBoxes = spawnedBoxes.Where(box => box != null).ToList(); // Clean up any null references
 
             Box closestBox = spawnedBoxes
@@ -196,7 +196,10 @@ public class BoxesSpawnManager : MonoBehaviour, IInitializable
         }
         catch (System.Exception ex)
         {
-            DebugUtility.WriteInColor($"Error in GetClosestBoxPositionToPoint: {ex.Message}", Color.red);
+            DebugUtility.WriteInColor(
+                $"Error in GetClosestBoxPositionToPoint: {ex.Message}",
+                Color.red
+            );
             return null;
         }
     }
