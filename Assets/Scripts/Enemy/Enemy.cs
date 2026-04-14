@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     EnemyHealth health;
     EnemyAttack enemyAttack;
     EnemyMovementStateMachine movementStateMachine;
+    [SerializeField]
+    FasolkaAnimationController fasolkaAnimationController;
 
     [SerializeField]
     float separationTimerInterval = 1f;
@@ -28,6 +30,8 @@ public class Enemy : MonoBehaviour
         movementStateMachine = GetComponent<EnemyMovementStateMachine>();
         if (movementStateMachine == null)
             Debug.LogError("EnemyMovementStateMachine component is missing!");
+        if (fasolkaAnimationController == null)
+            Debug.LogError("FasolkaAnimationController component is missing!");
         health.OnDeath += Die;
     }
 
@@ -94,6 +98,7 @@ public class Enemy : MonoBehaviour
     public void MakeAttack(GameObject target)
     {
         enemyAttack.DoAttack(target);
+        fasolkaAnimationController.DoAttackAnim();
         Debug.Log($"Attacking {target.name}");
     }
 

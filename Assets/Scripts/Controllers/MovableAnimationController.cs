@@ -36,7 +36,7 @@ public class MovableAnimationController : MonoBehaviour
         {
             Debug.LogWarning($"Animation action '{currentActionName}' not found in the animation actions dictionary.");
         }
-        
+
         previousActionName = currentActionName;
     }
 }

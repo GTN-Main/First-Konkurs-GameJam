@@ -11,6 +11,8 @@ public class EndArea : MonoBehaviour
     [SerializeField] private Slider sliderEndArea;
     [SerializeField] private Image sliderFill;
     [SerializeField] Color colorSlider, colorEndScreen;
+    [SerializeField] private SpriteRenderer flowerImage;
+    [SerializeField] private Sprite[] statesOfFlower;
 
     void Start()
     {
@@ -25,6 +27,26 @@ public class EndArea : MonoBehaviour
         UpdateCanvasVisibility();
         UpdateSlider();
         UpdateSliderSize();
+        UpdateFlower();
+    }
+
+    void UpdateFlower()
+    {
+        if (percentageToEnd >= 0.99f)
+        {
+            flowerImage.sprite = statesOfFlower[statesOfFlower.Length - 1];
+            return;
+        }
+        if (percentageToEnd <= 0.01f)
+        {
+            flowerImage.sprite = null;
+            return;
+        }
+
+        int index = Mathf.FloorToInt(percentageToEnd * (statesOfFlower.Length+1));
+        if (index == 0) flowerImage.sprite = null;
+        index = Mathf.Clamp(index-1, 0, statesOfFlower.Length - 1);
+        flowerImage.sprite = statesOfFlower[index];
     }
 
     void UpdatePercentIfCan()

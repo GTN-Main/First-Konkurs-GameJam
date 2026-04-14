@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAnimationController : MovableAnimationController
+public class FasolkaAnimationController : MovableAnimationController
 {
     [SerializeField] MovementPrinciples.MovableDirection currentDirection = MovementPrinciples.MovableDirection.None;
     [SerializeField] AnimationClip UpWalk, DownWalk, LeftWalk, RightWalk;
+    [SerializeField] AnimationClip UpAttack, DownAttack, LeftAttack, RightAttack;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Vector2 velocityVector;
     [SerializeField] SpriteRenderer mainBodySpriteRenderer;
@@ -12,6 +13,9 @@ public class EnemyAnimationController : MovableAnimationController
     [SerializeField] Sprite[] variants_back;
     [SerializeField] int variantIndex = 0;
     bool isGameOver = false;
+    float attackButtonHold = 0f;
+    float maxAttackHoldTime = 2f;
+    bool isAttacking = false;
 
     void Start()
     {
@@ -21,7 +25,12 @@ public class EnemyAnimationController : MovableAnimationController
                 { "Down", DownWalk },
                 { "Left", LeftWalk },
                 { "Right", RightWalk },
-                { "None", DownWalk }
+                { "None", DownWalk },
+                { "UpAttack", UpAttack },
+                { "DownAttack", DownAttack },
+                { "LeftAttack", LeftAttack },
+                { "RightAttack", RightAttack },
+                { "NoneAttack", DownAttack },
             }
         );
 
@@ -63,6 +72,17 @@ public class EnemyAnimationController : MovableAnimationController
         }
     }
 
+    public void DoAttackAnim()
+    {
+        attackButtonHold = maxAttackHoldTime;
+    }
+
+    void Update()
+    {
+        if (attackButtonHold > 0f)
+            attackButtonHold -= Time.fixedDeltaTime;
+    }
+
     void FixedUpdate()
     {
         if (isGameOver) return;
@@ -70,14 +90,24 @@ public class EnemyAnimationController : MovableAnimationController
         velocityVector = new Vector2(Mathf.Round(movementVector.x), Mathf.Round(movementVector.y));
         var movableDirection = MovementPrinciples.GetDirectionFromMoveVector(velocityVector);
 
-        if (movableDirection != currentDirection)
+        if (attackButtonHold > 0f && !isAttacking)
+        {
+            isAttacking = true;
+            ChangeAnim(MovementPrinciples.MovableDirectionToString(currentDirection) + "Attack");
+        }
+        else if (attackButtonHold <= 0f && isAttacking)
+        {
+            isAttacking = false;
+            ChangeAnim(MovementPrinciples.MovableDirectionToString(currentDirection));
+        }
+        else if (movableDirection != currentDirection)
         {
             currentDirection = movableDirection;
             ChangeAnim(MovementPrinciples.MovableDirectionToString(currentDirection));
-            SetVariant();
         }
 
         UpdateController();
+        SetVariant();
     }
 
     private void SetVariant()

@@ -81,12 +81,12 @@ SpriteRenderer:
   m_SortingLayerID: -762746081
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3924068877380232693, guid: 1d682f8e17d0c424986e25d37d8d3534, type: 3}
+  m_Sprite: {fileID: 5408678090486713472, guid: 4b5045484d79c42409e34b570b99560d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 12.828125, y: 25.625}
+  m_Size: {x: 11, y: 25.015625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -126,14 +126,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 208978548e61e614fb1f423615bf04e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGirlAnimationController
+  playerTag: 0
   currentDirection: 0
   UpWalk: {fileID: 7400000, guid: 82f209f15177dff44a5220f3e509140c, type: 2}
   DownWalk: {fileID: 7400000, guid: 3d1564605c86c87459419620bf748117, type: 2}
   LeftWalk: {fileID: 7400000, guid: 645c33aabbbf62947bec0de8bd586f15, type: 2}
   RightWalk: {fileID: 7400000, guid: 6b0ec232d69c4d54f8add43f66f4d1bd, type: 2}
   Stand: {fileID: 7400000, guid: 4a1ca80988b26fb4fa450d0834037449, type: 2}
+  UpAttack: {fileID: 7400000, guid: a67ea1f764667444195cd4f98d935b30, type: 2}
+  DownAttack: {fileID: 7400000, guid: df62bbc49d2706a49967213250a57493, type: 2}
+  LeftAttack: {fileID: 7400000, guid: a4a3e7213584f9f4aae59d62ab40f0a5, type: 2}
+  RightAttack: {fileID: 7400000, guid: 9aae623a2c1425847a66806ad1cd4787, type: 2}
   rb: {fileID: 3039633047729713377}
   velocityVector: {x: 0, y: 0}
+  maxAttackHoldTime: 1
 --- !u!1 &9139810659440188313
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +157,7 @@ GameObject:
   - component: {fileID: 1255691650163776390}
   - component: {fileID: 281992264141986565}
   m_Layer: 7
-  m_Name: Player
+  m_Name: PlayerGirl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,6 +252,7 @@ MonoBehaviour:
   playerTag: 0
   speed: 5
   isAttacking: 0
+  maxAttackHoldTime: 1
 --- !u!50 &3039633047729713377
 Rigidbody2D:
   serializedVersion: 5

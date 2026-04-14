@@ -3,11 +3,16 @@ using UnityEngine;
 
 public class PlayerGirlAnimationController : MovableAnimationController
 {
+    [SerializeField]PlayerTag playerTag;
     [SerializeField] MovementPrinciples.MovableDirection currentDirection = MovementPrinciples.MovableDirection.None;
-    [SerializeField] AnimationClip UpWalk, DownWalk, LeftWalk, RightWalk, Stand;
+    [SerializeField] AnimationClip UpWalk, DownWalk, LeftWalk, RightWalk, Stand, UpAttack, DownAttack, LeftAttack, RightAttack;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Vector2 velocityVector;
     bool isGameOver = false;
+    bool isAttacking = false;
+    bool lastAttackState = false;
+    float attackButtonHoldTime = 0f;
+    float maxAttackHoldTime = 0.2f;
 
     void Start()
     {
@@ -17,13 +22,20 @@ public class PlayerGirlAnimationController : MovableAnimationController
                 { "Down", DownWalk },
                 { "Left", LeftWalk },
                 { "Right", RightWalk },
-                { "None", Stand }
+                { "None", Stand },
+                { "UpAttack", UpAttack },
+                { "DownAttack", DownAttack },
+                { "LeftAttack", LeftAttack },
+                { "RightAttack", RightAttack },
+                { "NoneAttack", DownAttack },
             }
         );
 
         ChangeAnim(MovementPrinciples.MovableDirectionToString(currentDirection));
         isGameOver = false;
     }
+
+    public void SetPlayerTag(PlayerTag tag) => playerTag = tag;
 
     void OnEnable()
     {
@@ -48,6 +60,27 @@ public class PlayerGirlAnimationController : MovableAnimationController
         }
     }
 
+    void Update()
+    {
+        var playerInput = PlayerInputListener.Instance?.GetPlayerInput(playerTag);
+        if (playerInput != null)
+        {
+            if (playerInput.attack)
+            {
+                attackButtonHoldTime += Time.deltaTime;
+                if (attackButtonHoldTime < maxAttackHoldTime)
+                    isAttacking = true;
+                else
+                    isAttacking = false;
+            }
+            else
+            {
+                isAttacking = false;
+                attackButtonHoldTime = 0f;
+            }
+        }
+    }
+
     void FixedUpdate()
     {
         if (isGameOver) return;
@@ -55,11 +88,24 @@ public class PlayerGirlAnimationController : MovableAnimationController
         velocityVector = new Vector2(Mathf.Round(movementVector.x), Mathf.Round(movementVector.y));
         var movableDirection = MovementPrinciples.GetDirectionFromMoveVector(velocityVector);
 
-        if (movableDirection != currentDirection)
+        if (lastAttackState != isAttacking)
+        {
+            lastAttackState = isAttacking;
+            if (isAttacking)
+            {
+                ChangeAnim(MovementPrinciples.MovableDirectionToString(currentDirection) + "Attack");
+            }
+            else
+            {
+                ChangeAnim(MovementPrinciples.MovableDirectionToString(currentDirection));
+            }
+        }
+        else if (movableDirection != currentDirection)
         {
             currentDirection = movableDirection;
             ChangeAnim(MovementPrinciples.MovableDirectionToString(currentDirection));
         }
+        
 
         UpdateController();
     }

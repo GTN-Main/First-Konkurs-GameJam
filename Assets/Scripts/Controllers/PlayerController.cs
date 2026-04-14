@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     CapsuleCollider2D capsule;
     [SerializeField] float speed = 1000f;
     [SerializeField] bool isAttacking = false;
+    float attackButtonHoldTime = 0f;
+    float maxAttackHoldTime = 0.2f;
 
     void Start()
     {
@@ -51,11 +53,15 @@ public class PlayerController : MonoBehaviour
         if (playerInput != null && playerInput.attack && !isAttacking)
         {
             isAttacking = true;
-            Attack();
+            attackButtonHoldTime += Time.fixedDeltaTime;
+
+            if (attackButtonHoldTime < maxAttackHoldTime)
+                Attack();
         }
         else if (playerInput != null && !playerInput.attack)
         {
             isAttacking = false;
+            attackButtonHoldTime = 0f;
         }
     }
 
