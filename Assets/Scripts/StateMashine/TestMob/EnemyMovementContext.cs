@@ -11,7 +11,6 @@ public class EnemyMovementContext
     Rigidbody2D rb;
 
     Func<GameObject> target; // The closest player
-
     #region Timers
     public float timerOfCurrentState { get; private set; }
 

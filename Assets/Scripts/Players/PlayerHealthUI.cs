@@ -3,12 +3,18 @@ using UnityEngine.UI;
 
 public class PlayerHealthUI : MonoBehaviour
 {
-    [SerializeField] private GameObject healthPanel;
-    [SerializeField] GameObject healthHeartPrefab;
+    [SerializeField]
+    private GameObject healthPanel;
+
+    [SerializeField]
+    GameObject healthHeartPrefab;
     Image[] heartGameObjectsImages;
 
-    [SerializeField] Sprite fullHeartSprite;
-    [SerializeField] Sprite emptyHeartSprite;
+    [SerializeField]
+    Sprite fullHeartSprite;
+
+    [SerializeField]
+    Sprite emptyHeartSprite;
 
     public void Init(int maxHealth)
     {
@@ -44,7 +50,7 @@ public class PlayerHealthUI : MonoBehaviour
             heartGameObjectsImages[i] = heartImage;
         }
     }
-    
+
     void ClearHealthUI()
     {
         foreach (Transform child in healthPanel.transform)

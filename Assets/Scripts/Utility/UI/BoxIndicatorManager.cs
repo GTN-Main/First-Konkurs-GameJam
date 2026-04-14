@@ -3,16 +3,32 @@ using UnityEngine;
 
 public class BoxIndicatorManager : MonoBehaviour
 {
+    [SerializeField]
+    private Vector3 targetPosition;
 
-    [SerializeField] private Vector3 targetPosition;
-    [SerializeField] private bool hasTargetPosition = false;
-    [SerializeField] private RectTransform indicatorRectTransform;
-    [SerializeField] private float timerToFindTargetBox = 0f;
-    [SerializeField]private float timeToFindTargetBox_Cooldown = 1f;
-    [SerializeField] private float marginFromScreenEdge = 100f;
-    [SerializeField] private float offsetAngle = 0f;
-    [SerializeField] private Camera cameraUI;
-    [SerializeField] private Canvas canvas;
+    [SerializeField]
+    private bool hasTargetPosition = false;
+
+    [SerializeField]
+    private RectTransform indicatorRectTransform;
+
+    [SerializeField]
+    private float timerToFindTargetBox = 0f;
+
+    [SerializeField]
+    private float timeToFindTargetBox_Cooldown = 1f;
+
+    [SerializeField]
+    private float marginFromScreenEdge = 100f;
+
+    [SerializeField]
+    private float offsetAngle = 0f;
+
+    [SerializeField]
+    private Camera cameraUI;
+
+    [SerializeField]
+    private Canvas canvas;
 
     void OnEnable()
     {
@@ -33,7 +49,10 @@ public class BoxIndicatorManager : MonoBehaviour
         timerToFindTargetBox += Time.deltaTime;
         if (timerToFindTargetBox >= timeToFindTargetBox_Cooldown)
         {
-            Vector3? targetPosition = BoxesSpawnManager.Instance?.GetClosestBoxPositionToPoint(Camera.main.transform.position) ?? null;
+            Vector3? targetPosition =
+                BoxesSpawnManager.Instance?.GetClosestBoxPositionToPoint(
+                    Camera.main.transform.position
+                ) ?? null;
             hasTargetPosition = targetPosition.HasValue;
             if (targetPosition.HasValue)
             {
@@ -45,9 +64,13 @@ public class BoxIndicatorManager : MonoBehaviour
 
     void Update()
     {
-        if (cameraUI == null) return;
+        if (cameraUI == null)
+            return;
 
-        if (GameManager.Instance == null || GameManager.Instance.GetCurrentGameStateTag() != GameManager.GameStateTag.StartGame)
+        if (
+            GameManager.Instance == null
+            || GameManager.Instance.GetCurrentGameStateTag() != GameManager.GameStateTag.StartGame
+        )
         {
             indicatorRectTransform.gameObject.SetActive(false);
             return;
@@ -59,10 +82,20 @@ public class BoxIndicatorManager : MonoBehaviour
         {
             if (IsBoxOffScreen(targetPosition, out Vector3 targetPositionOnScreen))
             {
-                Vector3 clampedTargetPositionOnScreen = ClampToScreen(targetPositionOnScreen, marginFromScreenEdge);
-                Vector3 indicatorWorldPosition = GetWorldPositionFromScreen(clampedTargetPositionOnScreen);
-                indicatorRectTransform.position = Vector3.Scale(indicatorWorldPosition, new Vector3(1, 1, 0));
-                float angle = GetAngleToTarget(cameraUI.transform.position, indicatorWorldPosition) + offsetAngle;
+                Vector3 clampedTargetPositionOnScreen = ClampToScreen(
+                    targetPositionOnScreen,
+                    marginFromScreenEdge
+                );
+                Vector3 indicatorWorldPosition = GetWorldPositionFromScreen(
+                    clampedTargetPositionOnScreen
+                );
+                indicatorRectTransform.position = Vector3.Scale(
+                    indicatorWorldPosition,
+                    new Vector3(1, 1, 0)
+                );
+                float angle =
+                    GetAngleToTarget(cameraUI.transform.position, indicatorWorldPosition)
+                    + offsetAngle;
                 indicatorRectTransform.localEulerAngles = new Vector3(0, 0, angle);
                 indicatorRectTransform.gameObject.SetActive(true);
             }
@@ -77,10 +110,10 @@ public class BoxIndicatorManager : MonoBehaviour
     {
         screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
         bool isOffScreen =
-            screenPosition.x <= marginFromScreenEdge ||
-            screenPosition.x >= Screen.width - marginFromScreenEdge ||
-            screenPosition.y <= marginFromScreenEdge ||
-            screenPosition.y >= Screen.height - marginFromScreenEdge;
+            screenPosition.x <= marginFromScreenEdge
+            || screenPosition.x >= Screen.width - marginFromScreenEdge
+            || screenPosition.y <= marginFromScreenEdge
+            || screenPosition.y >= Screen.height - marginFromScreenEdge;
         return isOffScreen;
     }
 

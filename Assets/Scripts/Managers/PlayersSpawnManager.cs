@@ -5,10 +5,13 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
 {
     [SerializeField]
     GameObject playerPrefab;
-    [SerializeField]
-    Color player1Color = Color.blue, player2Color = Color.red;
 
-    public PlayerController Player1, Player2;
+    [SerializeField]
+    Color player1Color = Color.blue,
+        player2Color = Color.red;
+
+    public PlayerController Player1,
+        Player2;
 
     public static PlayerSpawnManager Instance { get; private set; }
 
@@ -35,7 +38,8 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
 
     async Task SpawnPlayer(PlayerTag playerTag)
     {
-        Vector3 spawnPosition = playerTag == PlayerTag.Player1 ? new Vector3(-2, 0, 0) : new Vector3(2, 0, 0);
+        Vector3 spawnPosition =
+            playerTag == PlayerTag.Player1 ? new Vector3(-2, 0, 0) : new Vector3(2, 0, 0);
         var player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
         player.name = playerTag.ToString();
         player.layer = LayerMask.NameToLayer("Players");

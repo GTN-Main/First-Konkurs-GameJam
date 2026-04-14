@@ -3,25 +3,45 @@ using UnityEngine;
 
 public class EnemyAnimationController : MovableAnimationController
 {
-    [SerializeField] MovementPrinciples.MovableDirection currentDirection = MovementPrinciples.MovableDirection.None;
-    [SerializeField] AnimationClip UpWalk, DownWalk, LeftWalk, RightWalk;
-    [SerializeField] Rigidbody2D rb;
-    [SerializeField] Vector2 velocityVector;
-    [SerializeField] SpriteRenderer mainBodySpriteRenderer;
-    [SerializeField] Sprite[] variants_front;
-    [SerializeField] Sprite[] variants_back;
-    [SerializeField] int variantIndex = 0;
+    [SerializeField]
+    MovementPrinciples.MovableDirection currentDirection = MovementPrinciples.MovableDirection.None;
+
+    [SerializeField]
+    AnimationClip UpWalk,
+        DownWalk,
+        LeftWalk,
+        RightWalk;
+
+    [SerializeField]
+    Rigidbody2D rb;
+
+    [SerializeField]
+    Vector2 velocityVector;
+
+    [SerializeField]
+    SpriteRenderer mainBodySpriteRenderer;
+
+    [SerializeField]
+    Sprite[] variants_front;
+
+    [SerializeField]
+    Sprite[] variants_back;
+
+    [SerializeField]
+    int variantIndex = 0;
     bool isGameOver = false;
 
     void Start()
     {
-        Init(GetComponent<Animator>(), new Dictionary<string, AnimationClip>()
+        Init(
+            GetComponent<Animator>(),
+            new Dictionary<string, AnimationClip>()
             {
                 { "Up", UpWalk },
                 { "Down", DownWalk },
                 { "Left", LeftWalk },
                 { "Right", RightWalk },
-                { "None", DownWalk }
+                { "None", DownWalk },
             }
         );
 
@@ -57,7 +77,10 @@ public class EnemyAnimationController : MovableAnimationController
 
     private void OnGameStateChanged(GameState state)
     {
-        if (state.GetTag() == GameManager.GameStateTag.LooseGame || state.GetTag() == GameManager.GameStateTag.WonGame)
+        if (
+            state.GetTag() == GameManager.GameStateTag.LooseGame
+            || state.GetTag() == GameManager.GameStateTag.WonGame
+        )
         {
             isGameOver = true;
         }
@@ -65,7 +88,8 @@ public class EnemyAnimationController : MovableAnimationController
 
     void FixedUpdate()
     {
-        if (isGameOver) return;
+        if (isGameOver)
+            return;
         Vector2 movementVector = GetVelocityVector();
         velocityVector = new Vector2(Mathf.Round(movementVector.x), Mathf.Round(movementVector.y));
         var movableDirection = MovementPrinciples.GetDirectionFromMoveVector(velocityVector);
@@ -82,7 +106,10 @@ public class EnemyAnimationController : MovableAnimationController
 
     private void SetVariant()
     {
-        mainBodySpriteRenderer.sprite = currentDirection == MovementPrinciples.MovableDirection.Up ? variants_back[variantIndex] : variants_front[variantIndex];
+        mainBodySpriteRenderer.sprite =
+            currentDirection == MovementPrinciples.MovableDirection.Up
+                ? variants_back[variantIndex]
+                : variants_front[variantIndex];
     }
 
     Vector2 GetVelocityVector()

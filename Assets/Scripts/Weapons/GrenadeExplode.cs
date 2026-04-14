@@ -5,24 +5,60 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
 public class GrenadeExplode : MonoBehaviour
 {
-    [SerializeField] private float explosionRadius = 5f;
-    [SerializeField] private float explosionDamage = 50f;
-    [SerializeField] private float explosionDelay = 2f;
-    [SerializeField] Vector2 movementVector = Vector2.zero;
-    [SerializeField] private float movementDistance = 5f;
-    [SerializeField] private float movementTime = 5f;
-    [SerializeField] private LayerMask damageableLayers;
-    [SerializeField] private Transform maxRadiusImageT;
-    [SerializeField] private Transform fillImageT;
-    [SerializeField] private Vector2 aspectRatioSize;
-    [SerializeField] AnimationCurve moveOverTimeCurve;
-    [SerializeField] private Transform flameImageT;
-    [SerializeField] private Vector2 flameStartPos;
-    [SerializeField] private Vector2 flameEndPos;
+    [SerializeField]
+    private float explosionRadius = 5f;
+
+    [SerializeField]
+    private float explosionDamage = 50f;
+
+    [SerializeField]
+    private float explosionDelay = 2f;
+
+    [SerializeField]
+    Vector2 movementVector = Vector2.zero;
+
+    [SerializeField]
+    private float movementDistance = 5f;
+
+    [SerializeField]
+    private float movementTime = 5f;
+
+    [SerializeField]
+    private LayerMask damageableLayers;
+
+    [SerializeField]
+    private Transform maxRadiusImageT;
+
+    [SerializeField]
+    private Transform fillImageT;
+
+    [SerializeField]
+    private Vector2 aspectRatioSize;
+
+    [SerializeField]
+    AnimationCurve moveOverTimeCurve;
+
+    [SerializeField]
+    private Transform flameImageT;
+
+    [SerializeField]
+    private Vector2 flameStartPos;
+
+    [SerializeField]
+    private Vector2 flameEndPos;
 
     Rigidbody2D rb;
 
-    public void Init(Vector2 position, float explosionRadius, float explosionDamage, float explosionDelay, Vector2 movementVector, float movementDistance, float movementTime, LayerMask damageableLayers)
+    public void Init(
+        Vector2 position,
+        float explosionRadius,
+        float explosionDamage,
+        float explosionDelay,
+        Vector2 movementVector,
+        float movementDistance,
+        float movementTime,
+        LayerMask damageableLayers
+    )
     {
         rb = GetComponent<Rigidbody2D>();
         transform.position = position;
@@ -52,7 +88,10 @@ public class GrenadeExplode : MonoBehaviour
 
     private void OnGameStateChanged(GameState state)
     {
-        if (state.GetTag() == GameManager.GameStateTag.LooseGame || state.GetTag() == GameManager.GameStateTag.WonGame)
+        if (
+            state.GetTag() == GameManager.GameStateTag.LooseGame
+            || state.GetTag() == GameManager.GameStateTag.WonGame
+        )
         {
             Destroy(gameObject);
         }
@@ -75,7 +114,9 @@ public class GrenadeExplode : MonoBehaviour
         float elapsedTime = 0f;
         Vector2 startPosition = transform.position;
         Vector2 targetPosition = startPosition + movementVector.normalized * movementDistance;
-        Debug.Log($"Moving grenade from {startPosition} to {targetPosition} over {movementTime} seconds.");
+        Debug.Log(
+            $"Moving grenade from {startPosition} to {targetPosition} over {movementTime} seconds."
+        );
 
         rb.WakeUp();
 
@@ -97,11 +138,14 @@ public class GrenadeExplode : MonoBehaviour
         rb.MovePosition(targetPosition);
     }
 
-
     async Task Explode()
     {
         await Task.Delay(Mathf.RoundToInt(explosionDelay * 1000));
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(
+            transform.position,
+            explosionRadius,
+            damageableLayers
+        );
         foreach (Collider2D hitCollider in hitColliders)
         {
             EnemyHealth enemyHealth = hitCollider.GetComponent<EnemyHealth>();

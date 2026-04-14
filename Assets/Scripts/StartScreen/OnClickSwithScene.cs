@@ -11,7 +11,7 @@ public class OnClickSwithScene : MonoBehaviour
             clickAction.performed += OnMouseDown;
         }
     }
-    
+
     void OnMouseDown(InputAction.CallbackContext context)
     {
         var clickAction = InputManager.Instance.CurrentMap_global.FindAction("Click");
