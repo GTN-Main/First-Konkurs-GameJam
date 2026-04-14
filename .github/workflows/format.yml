@@ -1,0 +1,11 @@
+name: Format with CSharpier
+
+on:
+  push:
+    branches: ['**']
+    tags-ignore: ['**']
+
+jobs:
+  format:
+    permissions: write-all
+    uses: GTN-Main/actions/.github/workflows/format.yml@main
