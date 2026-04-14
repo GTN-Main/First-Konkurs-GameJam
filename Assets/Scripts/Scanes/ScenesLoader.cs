@@ -11,7 +11,7 @@ public class ScenesLoader
             Debug.LogError("GameState is null. Cannot load scene.");
             return;
         }
-    
+
         //  No need to load scene if GameState doesn't specify one
         if (gameState.GetSceneName() == null || gameState.GetSceneName().Trim() == "")
         {
@@ -31,7 +31,7 @@ public class ScenesLoader
         await loadingScene;
         DebugUtility.WriteInColor($"Scene '{sceneToLoadName}' loaded successfully.", Color.green);
     }
-    
+
     public static Scene GetCurrentScene()
     {
         return SceneManager.GetActiveScene();

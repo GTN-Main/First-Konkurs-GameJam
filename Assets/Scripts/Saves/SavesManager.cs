@@ -71,7 +71,7 @@ public static class SavesManager
     static async Task ResetBasicSave()
     {
         #region Reset bacis save data
-        
+
         #endregion
 
         await SaveToFile<BasicSave>(GetBasicSaveData(), savePath_basic);

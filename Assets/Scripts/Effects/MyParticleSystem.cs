@@ -5,7 +5,9 @@ using UnityEngine;
 public class MyParticleSystem : MonoBehaviour, IInitializable
 {
     public static MyParticleSystem Instance { get; private set; }
-    [SerializeField] private GameObject[] prefabs;
+
+    [SerializeField]
+    private GameObject[] prefabs;
     private Dictionary<string, GameObject> prefabDictionary;
 
     void Awake()
@@ -53,7 +55,7 @@ public class MyParticleSystem : MonoBehaviour, IInitializable
             Debug.LogError("Prefab dictionary is not initialized.");
             return;
         }
-        
+
         if (prefabDictionary.TryGetValue(effectName, out GameObject prefab))
         {
             var effect = Instantiate(prefab, position, Quaternion.identity);

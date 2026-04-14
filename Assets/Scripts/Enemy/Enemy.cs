@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     float attackCooldown = 1f;
+
     [SerializeField]
     float separationStrength = 1.5f;
     Rigidbody2D rb;
@@ -13,6 +14,9 @@ public class Enemy : MonoBehaviour
     EnemyHealth health;
     EnemyAttack enemyAttack;
     EnemyMovementStateMachine movementStateMachine;
+
+    [SerializeField]
+    FasolkaAnimationController fasolkaAnimationController;
 
     [SerializeField]
     float separationTimerInterval = 1f;
@@ -28,6 +32,8 @@ public class Enemy : MonoBehaviour
         movementStateMachine = GetComponent<EnemyMovementStateMachine>();
         if (movementStateMachine == null)
             Debug.LogError("EnemyMovementStateMachine component is missing!");
+        if (fasolkaAnimationController == null)
+            Debug.LogError("FasolkaAnimationController component is missing!");
         health.OnDeath += Die;
     }
 
@@ -48,7 +54,10 @@ public class Enemy : MonoBehaviour
 
     private void OnGameStateChanged(GameState state)
     {
-        if (state.GetTag() == GameManager.GameStateTag.LooseGame || state.GetTag() == GameManager.GameStateTag.WonGame)
+        if (
+            state.GetTag() == GameManager.GameStateTag.LooseGame
+            || state.GetTag() == GameManager.GameStateTag.WonGame
+        )
         {
             OnGameOver();
         }
@@ -64,6 +73,7 @@ public class Enemy : MonoBehaviour
 
     Vector2 desiredVelocity = Vector2.zero;
     Vector2 _localdesiredVelocity = Vector2.zero;
+
     void FixedUpdate()
     {
         /*separationTimer += Time.deltaTime;
@@ -78,22 +88,31 @@ public class Enemy : MonoBehaviour
 
         Vector2 velocityNormalized = _localdesiredVelocity.normalized;
         //Vector2 finalVelocity = MovementPrinciples.GetAdjustedMovementCapsule(transform, velocityNormalized, capsule, 0.05f, LayerMask.GetMask("Obstacle")) * _localdesiredVelocity.magnitude;
-        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, _localdesiredVelocity, Time.fixedDeltaTime * 15f);
+        rb.linearVelocity = Vector2.Lerp(
+            rb.linearVelocity,
+            _localdesiredVelocity,
+            Time.fixedDeltaTime * 15f
+        );
         Debug.DrawRay(transform.position, _localdesiredVelocity, Color.green);
         Debug.DrawRay(transform.position, desiredVelocity, Color.blue);
         //Debug.DrawRay(transform.position, finalVelocity, Color.crimson);
 
-        _localdesiredVelocity = Vector2.Lerp(_localdesiredVelocity, desiredVelocity, Time.fixedDeltaTime * 15f);
+        _localdesiredVelocity = Vector2.Lerp(
+            _localdesiredVelocity,
+            desiredVelocity,
+            Time.fixedDeltaTime * 15f
+        );
     }
 
     public void Move(Vector2 desiredVelocity)
-    {        
+    {
         this.desiredVelocity = desiredVelocity;
     }
 
     public void MakeAttack(GameObject target)
     {
         enemyAttack.DoAttack(target);
+        fasolkaAnimationController.DoAttackAnim();
         Debug.Log($"Attacking {target.name}");
     }
 
@@ -117,7 +136,7 @@ public class Enemy : MonoBehaviour
             Debug.LogError("EnemyHealth component is missing!");
             return;
         }
-        
+
         this.health.Init(health);
     }
 

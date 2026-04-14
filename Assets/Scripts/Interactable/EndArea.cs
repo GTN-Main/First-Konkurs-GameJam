@@ -3,14 +3,34 @@ using UnityEngine.UI;
 
 public class EndArea : MonoBehaviour
 {
-    [SerializeField] GameObject player1Entered, player2Entered;
-    [SerializeField] private float percentageToEnd;
-    [SerializeField] private float timeToFill = 3f;
+    [SerializeField]
+    GameObject player1Entered,
+        player2Entered;
 
-    [SerializeField] private GameObject canvasEndArea;
-    [SerializeField] private Slider sliderEndArea;
-    [SerializeField] private Image sliderFill;
-    [SerializeField] Color colorSlider, colorEndScreen;
+    [SerializeField]
+    private float percentageToEnd;
+
+    [SerializeField]
+    private float timeToFill = 3f;
+
+    [SerializeField]
+    private GameObject canvasEndArea;
+
+    [SerializeField]
+    private Slider sliderEndArea;
+
+    [SerializeField]
+    private Image sliderFill;
+
+    [SerializeField]
+    Color colorSlider,
+        colorEndScreen;
+
+    [SerializeField]
+    private SpriteRenderer flowerImage;
+
+    [SerializeField]
+    private Sprite[] statesOfFlower;
 
     void Start()
     {
@@ -25,12 +45,35 @@ public class EndArea : MonoBehaviour
         UpdateCanvasVisibility();
         UpdateSlider();
         UpdateSliderSize();
+        UpdateFlower();
+    }
+
+    void UpdateFlower()
+    {
+        if (percentageToEnd >= 0.99f)
+        {
+            flowerImage.sprite = statesOfFlower[statesOfFlower.Length - 1];
+            return;
+        }
+        if (percentageToEnd <= 0.01f)
+        {
+            flowerImage.sprite = null;
+            return;
+        }
+
+        int index = Mathf.FloorToInt(percentageToEnd * (statesOfFlower.Length + 1));
+        if (index == 0)
+            flowerImage.sprite = null;
+        index = Mathf.Clamp(index - 1, 0, statesOfFlower.Length - 1);
+        flowerImage.sprite = statesOfFlower[index];
     }
 
     void UpdatePercentIfCan()
     {
-        if (!GameManager.CanPlayersReturnToEndArea()) return;
-        if (GameManager.Instance.GetCurrentGameStateTag() != GameManager.GameStateTag.StartGame) return;
+        if (!GameManager.CanPlayersReturnToEndArea())
+            return;
+        if (GameManager.Instance.GetCurrentGameStateTag() != GameManager.GameStateTag.StartGame)
+            return;
 
         if (AreBothPlayersInEndArea())
         {
@@ -68,14 +111,22 @@ public class EndArea : MonoBehaviour
     void UpdateSlider()
     {
         if (sliderEndArea.value < 1)
-            sliderEndArea.value = Mathf.MoveTowards(sliderEndArea.value, percentageToEnd, Time.deltaTime * 5f);
+            sliderEndArea.value = Mathf.MoveTowards(
+                sliderEndArea.value,
+                percentageToEnd,
+                Time.deltaTime * 5f
+            );
     }
 
     void UpdateSliderSize()
     {
         if (sliderEndArea.value >= 1)
         {
-            sliderEndArea.transform.localScale = Vector3.Lerp(sliderEndArea.transform.localScale, Vector2.one * 150, Time.deltaTime * 0.25f);
+            sliderEndArea.transform.localScale = Vector3.Lerp(
+                sliderEndArea.transform.localScale,
+                Vector2.one * 150,
+                Time.deltaTime * 0.25f
+            );
             sliderFill.color = Color.Lerp(sliderFill.color, colorEndScreen, Time.deltaTime * 3f);
         }
     }
@@ -96,7 +147,7 @@ public class EndArea : MonoBehaviour
             }
         }
     }
-    
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.TryGetComponent<PlayerController>(out PlayerController player))

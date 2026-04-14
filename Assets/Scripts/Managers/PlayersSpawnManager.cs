@@ -4,11 +4,13 @@ using UnityEngine;
 public class PlayerSpawnManager : MonoBehaviour, IInitializable
 {
     [SerializeField]
-    GameObject playerPrefab;
-    [SerializeField]
-    Color player1Color = Color.blue, player2Color = Color.red;
+    GameObject playerPrefabGirl;
 
-    public PlayerController Player1, Player2;
+    [SerializeField]
+    GameObject playerPrefabFasolka;
+
+    public PlayerController Player1,
+        Player2;
 
     public static PlayerSpawnManager Instance { get; private set; }
 
@@ -20,6 +22,19 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
             return;
         }
         Instance = this;
+    }
+
+    void Start()
+    {
+        if (playerPrefabGirl == null)
+        {
+            Debug.LogError("Player prefab for PlayerGirl is not assigned in the inspector.");
+        }
+
+        if (playerPrefabFasolka == null)
+        {
+            Debug.LogError("Player prefab for PlayerFasolka is not assigned in the inspector.");
+        }
     }
 
     public async Task Init()
@@ -35,8 +50,13 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
 
     async Task SpawnPlayer(PlayerTag playerTag)
     {
-        Vector3 spawnPosition = playerTag == PlayerTag.Player1 ? new Vector3(-2, 0, 0) : new Vector3(2, 0, 0);
-        var player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+        Vector3 spawnPosition =
+            playerTag == PlayerTag.Player1 ? new Vector3(-2, 0, 0) : new Vector3(2, 0, 0);
+        var player = Instantiate(
+            playerTag == PlayerTag.Player1 ? playerPrefabFasolka : playerPrefabGirl,
+            spawnPosition,
+            Quaternion.identity
+        );
         player.name = playerTag.ToString();
         player.layer = LayerMask.NameToLayer("Players");
         player.transform.SetParent(transform);
@@ -51,12 +71,18 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
                 Player2 = playerController;
         }
 
-        await Task.Yield();
-
-        var spriteRenderer = player.GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null)
+        var pGAC = player.transform.GetChild(0).GetComponent<PlayerGirlAnimationController>();
+        if (pGAC != null)
         {
-            spriteRenderer.color = playerTag == PlayerTag.Player1 ? player1Color : player2Color;
+            pGAC.SetPlayerTag(playerTag);
         }
+
+        var fAC = player.transform.GetChild(0).GetComponent<PlayerFasolkaAnimationController>();
+        if (fAC != null)
+        {
+            fAC.SetPlayerTag(playerTag);
+        }
+
+        await Task.Yield();
     }
 }

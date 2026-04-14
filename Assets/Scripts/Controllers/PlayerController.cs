@@ -3,12 +3,19 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(CapsuleCollider2D), typeof(PlayerAttack))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] PlayerTag playerTag;
+    [SerializeField]
+    PlayerTag playerTag;
     Rigidbody2D rb;
     PlayerAttack pA;
     CapsuleCollider2D capsule;
-    [SerializeField] float speed = 1000f;
-    [SerializeField] bool isAttacking = false;
+
+    [SerializeField]
+    float speed = 1000f;
+
+    [SerializeField]
+    bool isAttacking = false;
+    float attackButtonHoldTime = 0f;
+    float maxAttackHoldTime = 0.2f;
 
     void Start()
     {
@@ -34,7 +41,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnGameStateChanged(GameState state)
     {
-        if (state.GetTag() == GameManager.GameStateTag.LooseGame || state.GetTag() == GameManager.GameStateTag.WonGame)
+        if (
+            state.GetTag() == GameManager.GameStateTag.LooseGame
+            || state.GetTag() == GameManager.GameStateTag.WonGame
+        )
         {
             rb.simulated = false;
             pA.enabled = false;
@@ -51,18 +61,32 @@ public class PlayerController : MonoBehaviour
         if (playerInput != null && playerInput.attack && !isAttacking)
         {
             isAttacking = true;
-            Attack();
+            attackButtonHoldTime += Time.fixedDeltaTime;
+
+            if (attackButtonHoldTime < maxAttackHoldTime)
+                Attack();
         }
         else if (playerInput != null && !playerInput.attack)
         {
             isAttacking = false;
+            attackButtonHoldTime = 0f;
         }
     }
 
     void Move(PlayerInputData input)
     {
-        Vector2 moveDirection = MovementPrinciples.GetAdjustedMovementCapsule(transform, input.direction.normalized, capsule, 0.1f, LayerMask.GetMask("Obstacle") | LayerMask.GetMask("Enemy") | LayerMask.GetMask("Player"));
-        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, moveDirection * speed, Time.fixedDeltaTime * 10f);
+        Vector2 moveDirection = MovementPrinciples.GetAdjustedMovementCapsule(
+            transform,
+            input.direction.normalized,
+            capsule,
+            0.1f,
+            LayerMask.GetMask("Obstacle") | LayerMask.GetMask("Enemy") | LayerMask.GetMask("Player")
+        );
+        rb.linearVelocity = Vector2.Lerp(
+            rb.linearVelocity,
+            moveDirection * speed,
+            Time.fixedDeltaTime * 10f
+        );
     }
 
     void Attack()
@@ -74,8 +98,9 @@ public class PlayerController : MonoBehaviour
     {
         playerTag = tag;
     }
-    
+
     public PlayerTag GetPlayerTag() => playerTag;
 
-    public bool IsInteracting() => PlayerInputListener.Instance?.GetPlayerInput(playerTag)?.interact ?? false;
+    public bool IsInteracting() =>
+        PlayerInputListener.Instance?.GetPlayerInput(playerTag)?.interact ?? false;
 }

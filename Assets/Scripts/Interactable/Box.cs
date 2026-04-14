@@ -8,14 +8,23 @@ public class Box : MonoBehaviour
     BoxProgressOpen boxProgressOpen;
     BoxUI boxUI;
 
-    [SerializeField] float progressSpeed = 0.05f;
-    [SerializeField] float progressDecreaseSpeed = 0.1f;
-    [SerializeField] float maxProgress = 1f;
+    [SerializeField]
+    float progressSpeed = 0.05f;
 
-    [SerializeField] Animator boxAnimator;
-    [SerializeField] AnimationClip landAnimationClip;
+    [SerializeField]
+    float progressDecreaseSpeed = 0.1f;
+
+    [SerializeField]
+    float maxProgress = 1f;
+
+    [SerializeField]
+    Animator boxAnimator;
+
+    [SerializeField]
+    AnimationClip landAnimationClip;
 
     private GameObject spawnPoint;
+
     public void SetSpawnPoint(GameObject spawnPoint)
     {
         this.spawnPoint = spawnPoint;
@@ -40,9 +49,8 @@ public class Box : MonoBehaviour
             WhenBoxIsNotOpeningAndIsNotOpened();
         else if (isNowOpening && !isBoxOpened)
             WhenBoxIsOpeningButNotOpened();
-            
     }
-    
+
     void WhenBoxIsNotOpeningAndIsNotOpened()
     {
         int playersInRangeCount = detectPlayerInRange.GetPlayersInRangeCount();
@@ -55,7 +63,9 @@ public class Box : MonoBehaviour
 
         if (playersInRangeCount == detectPlayerInRange.GetPlayersNeedCount())
         {
-            boxUI.SetText($"{playersInRangeCount}/{detectPlayerInRange.GetPlayersNeedCount()}\nInteract");
+            boxUI.SetText(
+                $"{playersInRangeCount}/{detectPlayerInRange.GetPlayersNeedCount()}\nInteract"
+            );
         }
         else
         {
@@ -73,27 +83,35 @@ public class Box : MonoBehaviour
         else
             boxProgressOpen.StartDecreasingProgress();
 
-        if (detectPlayerInRange.GetPlayersInRangeCount() != detectPlayerInRange.GetPlayersNeedCount())
+        if (
+            detectPlayerInRange.GetPlayersInRangeCount()
+            != detectPlayerInRange.GetPlayersNeedCount()
+        )
             boxProgressOpen.InteruptOpening();
     }
 
-    [SerializeField] bool isNowOpening = false;
-    [SerializeField] bool isBoxOpened = false;
+    [SerializeField]
+    bool isNowOpening = false;
+
+    [SerializeField]
+    bool isBoxOpened = false;
+
     async Task Open()
     {
-        if (isNowOpening || isBoxOpened) return;
+        if (isNowOpening || isBoxOpened)
+            return;
         isNowOpening = true;
         void OnProgressChanged(float newProgress)
         {
             boxUI.SetText($"{newProgress:P0}");
         }
-        
+
         boxProgressOpen.onProgressChanged += OnProgressChanged;
         boxProgressOpen.onBoxOpened += BoxOpened;
         boxProgressOpen.onOpeningTryEnded += OnOpeningTryEnded;
-        
+
         await boxProgressOpen.OpenBox(true, progressSpeed, progressDecreaseSpeed, maxProgress);
-        
+
         boxProgressOpen.onProgressChanged -= OnProgressChanged;
         boxProgressOpen.onBoxOpened -= BoxOpened;
         boxProgressOpen.onOpeningTryEnded -= OnOpeningTryEnded;
@@ -115,7 +133,7 @@ public class Box : MonoBehaviour
 
     void OnOpeningTryEnded()
     {
-       // Debug.Log("Opening attempt ended. Implement any necessary logic here.");
+        // Debug.Log("Opening attempt ended. Implement any necessary logic here.");
     }
 
     public void BeginLandAnimation()

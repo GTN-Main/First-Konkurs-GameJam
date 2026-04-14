@@ -516,9 +516,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a896a29c7d32c6458cc10daa3722e5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawnManager
-  playerPrefab: {fileID: 9139810659440188313, guid: f148c22ebb2e3ad4583a579e6e34b102, type: 3}
-  player1Color: {r: 1, g: 0.5019608, b: 0, a: 1}
-  player2Color: {r: 0.9098039, g: 0, b: 1, a: 1}
+  playerPrefabGirl: {fileID: 9139810659440188313, guid: f148c22ebb2e3ad4583a579e6e34b102, type: 3}
+  playerPrefabFasolka: {fileID: 9139810659440188313, guid: 11329d342d478ac4ea9028a85f7baef3, type: 3}
   Player1: {fileID: 0}
   Player2: {fileID: 0}
 --- !u!1 &5338944494036767240

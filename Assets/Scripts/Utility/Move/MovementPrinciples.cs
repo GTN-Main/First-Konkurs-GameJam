@@ -2,9 +2,20 @@ using UnityEngine;
 
 public class MovementPrinciples
 {
-    public static Vector2 GetAdjustedMovement(Transform transform, Vector2 moveInput, Vector2 rayDirection, float distanceToWall, LayerMask wallLayer)
+    public static Vector2 GetAdjustedMovement(
+        Transform transform,
+        Vector2 moveInput,
+        Vector2 rayDirection,
+        float distanceToWall,
+        LayerMask wallLayer
+    )
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection.normalized, distanceToWall, wallLayer);
+        RaycastHit2D hit = Physics2D.Raycast(
+            transform.position,
+            rayDirection.normalized,
+            distanceToWall,
+            wallLayer
+        );
 
         if (hit.collider == null)
         {
@@ -28,12 +39,13 @@ public class MovementPrinciples
     }
 
     public static Vector2 GetAdjustedMovementCapsule(
-    Transform transform,
-    Vector2 moveInput,
-    CapsuleCollider2D capsule,
-    float extraDistance,
-    LayerMask wallLayer,
-    float intencity = 1)
+        Transform transform,
+        Vector2 moveInput,
+        CapsuleCollider2D capsule,
+        float extraDistance,
+        LayerMask wallLayer,
+        float intencity = 1
+    )
     {
         Vector2 currentVelocity = moveInput;
 
@@ -74,7 +86,11 @@ public class MovementPrinciples
         return currentVelocity.normalized * moveInput.magnitude;
     }
 
-    public static Vector2 GetRepulsionWeight(Transform transform, float radius, LayerMask entityLayer)
+    public static Vector2 GetRepulsionWeight(
+        Transform transform,
+        float radius,
+        LayerMask entityLayer
+    )
     {
         Collider2D[] overlaps = Physics2D.OverlapCircleAll(transform.position, radius, entityLayer);
 
@@ -82,7 +98,8 @@ public class MovementPrinciples
 
         foreach (var other in overlaps)
         {
-            if (other.transform == transform) continue;
+            if (other.transform == transform)
+                continue;
 
             // Calculating the direction from the other entity to the current one
             Vector2 diff = (Vector2)transform.position - (Vector2)other.transform.position;
@@ -90,7 +107,8 @@ public class MovementPrinciples
             // The closer we get, the more we push away
             // The force grows exponentially as we get closer
             float distance = diff.magnitude;
-            if (distance < 0.001f) continue; // Unikamy dzielenia przez zero
+            if (distance < 0.001f)
+                continue; // Unikamy dzielenia przez zero
 
             repulsionForce += diff.normalized / distance;
         }
@@ -147,8 +165,6 @@ public class MovementPrinciples
         Right,
         Left,
         Up,
-        Down
+        Down,
     }
 }
-
-

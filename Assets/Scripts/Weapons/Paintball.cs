@@ -5,25 +5,56 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
 public class Paintball : MonoBehaviour
 {
-    [SerializeField] private float explosionRadius = 5f;
-    [SerializeField] private int explosionDamage = 50;
-    [SerializeField] Vector2 movementVector = Vector2.zero;
-    [SerializeField] private float movementDistance = 5f;
-    [SerializeField] private float movementTime = 5f;
-    [SerializeField] private LayerMask damageableLayers;
-    [SerializeField] private Transform maxRadiusImageT;
-    [SerializeField] private Transform fillImageT;
-    [SerializeField] private Vector2 aspectRatioSize;
-    [SerializeField] AnimationCurve moveOverTimeCurve;
+    [SerializeField]
+    private float explosionRadius = 5f;
 
-    [SerializeField] private Transform mainImageT;
-    [SerializeField] private float maxHeight = 3f;
-    [SerializeField] AnimationCurve heightOverTimeCurve;
-    
+    [SerializeField]
+    private int explosionDamage = 50;
+
+    [SerializeField]
+    Vector2 movementVector = Vector2.zero;
+
+    [SerializeField]
+    private float movementDistance = 5f;
+
+    [SerializeField]
+    private float movementTime = 5f;
+
+    [SerializeField]
+    private LayerMask damageableLayers;
+
+    [SerializeField]
+    private Transform maxRadiusImageT;
+
+    [SerializeField]
+    private Transform fillImageT;
+
+    [SerializeField]
+    private Vector2 aspectRatioSize;
+
+    [SerializeField]
+    AnimationCurve moveOverTimeCurve;
+
+    [SerializeField]
+    private Transform mainImageT;
+
+    [SerializeField]
+    private float maxHeight = 3f;
+
+    [SerializeField]
+    AnimationCurve heightOverTimeCurve;
 
     Rigidbody2D rb;
 
-    public void Init(Vector2 position, float explosionRadius, int explosionDamage, Vector2 movementVector, float movementDistance, float movementTime, LayerMask damageableLayers)
+    public void Init(
+        Vector2 position,
+        float explosionRadius,
+        int explosionDamage,
+        Vector2 movementVector,
+        float movementDistance,
+        float movementTime,
+        LayerMask damageableLayers
+    )
     {
         rb = GetComponent<Rigidbody2D>();
         transform.position = position;
@@ -52,7 +83,10 @@ public class Paintball : MonoBehaviour
 
     private void OnGameStateChanged(GameState state)
     {
-        if (state.GetTag() == GameManager.GameStateTag.LooseGame || state.GetTag() == GameManager.GameStateTag.WonGame)
+        if (
+            state.GetTag() == GameManager.GameStateTag.LooseGame
+            || state.GetTag() == GameManager.GameStateTag.WonGame
+        )
         {
             Destroy(gameObject);
         }
@@ -74,7 +108,9 @@ public class Paintball : MonoBehaviour
         float elapsedTime = 0f;
         Vector2 startPosition = transform.position;
         Vector2 targetPosition = startPosition + movementVector.normalized * movementDistance;
-        Debug.Log($"Moving paintball from {startPosition} to {targetPosition} over {movementTime} seconds.");
+        Debug.Log(
+            $"Moving paintball from {startPosition} to {targetPosition} over {movementTime} seconds."
+        );
 
         rb.WakeUp();
 
@@ -97,14 +133,18 @@ public class Paintball : MonoBehaviour
         Explode();
     }
 
-
     async Task Explode()
     {
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(
+            transform.position,
+            explosionRadius,
+            damageableLayers
+        );
         foreach (Collider2D hitCollider in hitColliders)
         {
             PlayerController pC = hitCollider.GetComponent<PlayerController>();
-            if (pC == null) continue;
+            if (pC == null)
+                continue;
             PlayerTag playerTag = pC.GetPlayerTag();
             HealthManager.Instance.DamagePlayer(playerTag, explosionDamage);
         }

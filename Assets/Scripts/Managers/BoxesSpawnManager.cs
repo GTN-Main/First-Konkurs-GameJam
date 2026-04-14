@@ -7,14 +7,25 @@ public class BoxesSpawnManager : MonoBehaviour, IInitializable
 {
     public static BoxesSpawnManager Instance { get; private set; }
 
-    [SerializeField] private GameObject boxPrefab;
-    [SerializeField] private Transform[] spawnPoints;
-    [SerializeField] private bool[] isSpawnPointOccupied;
+    [SerializeField]
+    private GameObject boxPrefab;
+
+    [SerializeField]
+    private Transform[] spawnPoints;
+
+    [SerializeField]
+    private bool[] isSpawnPointOccupied;
 
     bool canSpawn = false;
-    [SerializeField] int startWaveSize = 3;
-    [SerializeField] float spawnInterval = 4f;
-    [SerializeField] List<Box> spawnedBoxes;
+
+    [SerializeField]
+    int startWaveSize = 3;
+
+    [SerializeField]
+    float spawnInterval = 4f;
+
+    [SerializeField]
+    List<Box> spawnedBoxes;
     int _boxesToSpawn = 0;
     bool isNowSpawningBox = false;
 
@@ -86,7 +97,9 @@ public class BoxesSpawnManager : MonoBehaviour, IInitializable
         Debug.Log($"Found {spawnPoints.Length} box spawn points.");
         if (spawnPoints.Length == 0)
         {
-            Debug.LogError("No spawn points found! Make sure to tag spawn point objects with 'BoxSpawnPoint'.");
+            Debug.LogError(
+                "No spawn points found! Make sure to tag spawn point objects with 'BoxSpawnPoint'."
+            );
         }
     }
 
@@ -95,8 +108,13 @@ public class BoxesSpawnManager : MonoBehaviour, IInitializable
         if (canSpawn && _boxesToSpawn > 0)
         {
             isNowSpawningBox = true;
-            Transform[] freeSpawnPoints = spawnPoints.Where((point, index) => !isSpawnPointOccupied[index]).ToArray();
-            Transform spawnPoint = freeSpawnPoints.Length > 0 ? freeSpawnPoints[UnityEngine.Random.Range(0, freeSpawnPoints.Length)] : null;
+            Transform[] freeSpawnPoints = spawnPoints
+                .Where((point, index) => !isSpawnPointOccupied[index])
+                .ToArray();
+            Transform spawnPoint =
+                freeSpawnPoints.Length > 0
+                    ? freeSpawnPoints[UnityEngine.Random.Range(0, freeSpawnPoints.Length)]
+                    : null;
             if (spawnPoint == null)
             {
                 Debug.LogWarning("No available spawn point found!");
@@ -168,7 +186,9 @@ public class BoxesSpawnManager : MonoBehaviour, IInitializable
                 return null;
             }
 
-            Box closestBox = spawnedBoxes.OrderBy(box => (box.transform.position - point).sqrMagnitude).FirstOrDefault();
+            Box closestBox = spawnedBoxes
+                .OrderBy(box => (box.transform.position - point).sqrMagnitude)
+                .FirstOrDefault();
             return closestBox != null ? closestBox.transform.position : null;
         }
         catch

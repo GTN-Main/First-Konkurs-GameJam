@@ -34,13 +34,11 @@ public class IdleState : EnemyMovementState
     {
         //Debug.Log($"Updating Idle State\nidleTarget: {idleTarget}");
 
-        Debug.DrawLine(
-            context.transform.position,
-            idleTarget,
-            Color.gold
-        );
+        Debug.DrawLine(context.transform.position, idleTarget, Color.gold);
 
-        float sqrMFromIdleTarget = Vector2.SqrMagnitude((Vector2)context.transform.position - idleTarget);
+        float sqrMFromIdleTarget = Vector2.SqrMagnitude(
+            (Vector2)context.transform.position - idleTarget
+        );
         bool shouldTurnAround =
             sqrMFromIdleTarget
             > (context.getIdleMaxRadius + currentRadiusOffset)
@@ -64,7 +62,9 @@ public class IdleState : EnemyMovementState
             currentRadiusOffset = UnityEngine.Random.Range(-context.getIdleRadiusRange, 0);
         }
 
-        Vector2 vNext = isTurningAround ? (idleTarget - (Vector2)context.transform.position) : dirForward;
+        Vector2 vNext = isTurningAround
+            ? (idleTarget - (Vector2)context.transform.position)
+            : dirForward;
         if (isTurningAround)
             vNext += (Vector2)Vector3.Cross(Vector3.back, vNext) * currentCrossInterference;
         vNext.Normalize();
@@ -85,9 +85,7 @@ public class IdleState : EnemyMovementState
         );
         context
             .GetEnemy()
-            .Move(
-                acceleration * dirForward * context.getIdleWalkingSpeed * Time.deltaTime
-            );
+            .Move(acceleration * dirForward * context.getIdleWalkingSpeed * Time.deltaTime);
 
         Debug.DrawRay(context.transform.position, dirForward, Color.cyan);
 

@@ -6,18 +6,38 @@ public class EnemiesSpawnManager : MonoBehaviour, IInitializable
 {
     public static EnemiesSpawnManager Instance { get; private set; }
 
-    [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private Transform[] spawnPoints;
+    [SerializeField]
+    private GameObject enemyPrefab;
 
-    [SerializeField] bool canSpawn = false;
-    [SerializeField] int waveNumber = 0;
-    [SerializeField] int startWaveSize = 3;
-    [SerializeField] float nextWaveSizeGrowth = 1.2f;
-    [SerializeField] int currentWaveSize = 0;
-    [SerializeField] float spawnInterval = 1f;
-    [SerializeField] List<Enemy> spawnedEnemies;
-    [SerializeField] int _enemiesToSpawn = 0;
-    [SerializeField] bool isNowSpawningEnemy = false;
+    [SerializeField]
+    private Transform[] spawnPoints;
+
+    [SerializeField]
+    bool canSpawn = false;
+
+    [SerializeField]
+    int waveNumber = 0;
+
+    [SerializeField]
+    int startWaveSize = 3;
+
+    [SerializeField]
+    float nextWaveSizeGrowth = 1.2f;
+
+    [SerializeField]
+    int currentWaveSize = 0;
+
+    [SerializeField]
+    float spawnInterval = 1f;
+
+    [SerializeField]
+    List<Enemy> spawnedEnemies;
+
+    [SerializeField]
+    int _enemiesToSpawn = 0;
+
+    [SerializeField]
+    bool isNowSpawningEnemy = false;
 
     void Awake()
     {
@@ -37,13 +57,19 @@ public class EnemiesSpawnManager : MonoBehaviour, IInitializable
 
     void Update()
     {
-        if (currentWaveSize == 0) return;
-        
+        if (currentWaveSize == 0)
+            return;
+
         if (canSpawn && _enemiesToSpawn > 0 && !isNowSpawningEnemy)
         {
             SpawnEnemy();
         }
-        else if (canSpawn && _enemiesToSpawn <= 0 && spawnedEnemies.Count == 0 && !isNowSpawningEnemy)
+        else if (
+            canSpawn
+            && _enemiesToSpawn <= 0
+            && spawnedEnemies.Count == 0
+            && !isNowSpawningEnemy
+        )
         {
             NextWave();
         }
@@ -96,7 +122,9 @@ public class EnemiesSpawnManager : MonoBehaviour, IInitializable
         Debug.Log($"Found {spawnPoints.Length} enemy spawn points.");
         if (spawnPoints.Length == 0)
         {
-            Debug.LogError("No spawn points found! Make sure to tag spawn point objects with 'EnemySpawnPoint'.");
+            Debug.LogError(
+                "No spawn points found! Make sure to tag spawn point objects with 'EnemySpawnPoint'."
+            );
         }
     }
 
@@ -106,7 +134,11 @@ public class EnemiesSpawnManager : MonoBehaviour, IInitializable
         {
             isNowSpawningEnemy = true;
             Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
-            GameObject enemyObj = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+            GameObject enemyObj = Instantiate(
+                enemyPrefab,
+                spawnPoint.position,
+                Quaternion.identity
+            );
             Enemy enemy = enemyObj.GetComponent<Enemy>();
             enemy.name = $"Enemy_{waveNumber}_{currentWaveSize - _enemiesToSpawn + 1}";
             Debug.Log($"Spawning {enemy.name}");
@@ -114,7 +146,12 @@ public class EnemiesSpawnManager : MonoBehaviour, IInitializable
             {
                 enemy.InitHealth(10f);
                 spawnedEnemies.Add(enemy);
-                enemy.OnDeath += () => { Debug.Log($"Enemy {enemy.name} died."); spawnedEnemies.Remove(enemy); Debug.Log($"Remaining enemies: {spawnedEnemies.Count}"); };
+                enemy.OnDeath += () =>
+                {
+                    Debug.Log($"Enemy {enemy.name} died.");
+                    spawnedEnemies.Remove(enemy);
+                    Debug.Log($"Remaining enemies: {spawnedEnemies.Count}");
+                };
             }
             else
             {
@@ -127,7 +164,9 @@ public class EnemiesSpawnManager : MonoBehaviour, IInitializable
         }
         else
         {
-            Debug.LogWarning("Cannot spawn enemy: either spawning is disabled or there are no enemies left to spawn.");
+            Debug.LogWarning(
+                "Cannot spawn enemy: either spawning is disabled or there are no enemies left to spawn."
+            );
         }
     }
 
