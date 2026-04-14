@@ -36,7 +36,6 @@ jobs:
       matrix:
         targetPlatform:
          - StandaloneWindows64
-         - StandaloneLinux64
     uses: GTN-Main/actions/.github/workflows/build.yml@main
     with:
       targetPlatform: ${{ matrix.targetPlatform }}
