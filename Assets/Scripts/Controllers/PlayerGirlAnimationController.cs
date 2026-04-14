@@ -16,7 +16,9 @@ public class PlayerGirlAnimationController : MovableAnimationController
 
     void Start()
     {
-        Init(GetComponent<Animator>(), new Dictionary<string, AnimationClip>()
+        Init(
+            GetComponent<Animator>(),
+            new Dictionary<string, AnimationClip>()
             {
                 { "Up", UpWalk },
                 { "Down", DownWalk },
@@ -54,7 +56,10 @@ public class PlayerGirlAnimationController : MovableAnimationController
 
     private void OnGameStateChanged(GameState state)
     {
-        if (state.GetTag() == GameManager.GameStateTag.LooseGame || state.GetTag() == GameManager.GameStateTag.WonGame)
+        if (
+            state.GetTag() == GameManager.GameStateTag.LooseGame
+            || state.GetTag() == GameManager.GameStateTag.WonGame
+        )
         {
             isGameOver = true;
         }
@@ -83,7 +88,8 @@ public class PlayerGirlAnimationController : MovableAnimationController
 
     void FixedUpdate()
     {
-        if (isGameOver) return;
+        if (isGameOver)
+            return;
         Vector2 movementVector = GetVelocityVector();
         velocityVector = new Vector2(Mathf.Round(movementVector.x), Mathf.Round(movementVector.y));
         var movableDirection = MovementPrinciples.GetDirectionFromMoveVector(velocityVector);

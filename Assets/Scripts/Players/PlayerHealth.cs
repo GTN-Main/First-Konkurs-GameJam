@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private int maxHealth;
-    [SerializeField] private int currentHealth;
+    [SerializeField]
+    private int maxHealth;
+
+    [SerializeField]
+    private int currentHealth;
 
     public void Init(int maxHealth)
     {
@@ -13,7 +16,10 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (GameManager.Instance.GetCurrentGameStateTag() == GameManager.GameStateTag.LooseGame || GameManager.Instance.GetCurrentGameStateTag() == GameManager.GameStateTag.WonGame)
+        if (
+            GameManager.Instance.GetCurrentGameStateTag() == GameManager.GameStateTag.LooseGame
+            || GameManager.Instance.GetCurrentGameStateTag() == GameManager.GameStateTag.WonGame
+        )
             return;
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
@@ -40,6 +46,6 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("One player has died.");
         OnPlayerDied?.Invoke(playerTag);
     }
-    
+
     public event System.Action<PlayerTag> OnPlayerDied;
 }

@@ -6,13 +6,24 @@ public class WaterContainerManager : MonoBehaviour, IInitializable
 {
     public static WaterContainerManager Instance { get; private set; }
 
-    [SerializeField] private GameObject panelWaterContainer;
-    [SerializeField] private RectTransform waterLevelIndicator;
-    [SerializeField] private Image waterLampFullIndicator;
-    [SerializeField] private Color waterLampFullColor = Color.cyan;
-    [SerializeField] private Color waterLampEmptyColor = Color.gray;
+    [SerializeField]
+    private GameObject panelWaterContainer;
 
-    [SerializeField] private float waterPercentage = 0f;
+    [SerializeField]
+    private RectTransform waterLevelIndicator;
+
+    [SerializeField]
+    private Image waterLampFullIndicator;
+
+    [SerializeField]
+    private Color waterLampFullColor = Color.cyan;
+
+    [SerializeField]
+    private Color waterLampEmptyColor = Color.gray;
+
+    [SerializeField]
+    private float waterPercentage = 0f;
+
     public bool IsWaterLevelFull() => waterPercentage >= 1f;
 
     void Awake()
@@ -90,7 +101,8 @@ public class WaterContainerManager : MonoBehaviour, IInitializable
     private void UpdateWaterUI()
     {
         UpdateWaterLevel(waterPercentage);
-        waterLampFullIndicator.color = waterPercentage >= 1f ? waterLampFullColor : waterLampEmptyColor;
+        waterLampFullIndicator.color =
+            waterPercentage >= 1f ? waterLampFullColor : waterLampEmptyColor;
     }
 
     private void ShowWaterContainerUI()
@@ -118,7 +130,6 @@ public class WaterContainerManager : MonoBehaviour, IInitializable
 
     public void UpdateWaterLevel(float newEndPercent)
     {
-
         waterLevelIndicator.anchorMax = new Vector2(1, newEndPercent);
         waterLevelIndicator.offsetMin = new Vector2(0, 0);
         waterLevelIndicator.offsetMax = Vector2.zero;

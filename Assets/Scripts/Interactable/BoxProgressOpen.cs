@@ -7,11 +7,16 @@ public class BoxProgressOpen : MonoBehaviour
 {
     InputAction openActionTest;
     InputAction resetActionTest;
-    [SerializeField] bool isIncreasing = true;
-    OpenProgress openProgress;
-    [SerializeField, Range(0, 1)] float progress;
 
-    [SerializeField] bool isOpening;
+    [SerializeField]
+    bool isIncreasing = true;
+    OpenProgress openProgress;
+
+    [SerializeField, Range(0, 1)]
+    float progress;
+
+    [SerializeField]
+    bool isOpening;
 
     void Start()
     {
@@ -19,7 +24,12 @@ public class BoxProgressOpen : MonoBehaviour
         resetProgressEvent += () => isOpening = false;
     }
 
-    public async Task OpenBox(bool isIncreasing, float progressSpeed = 0.05f, float progressDecreaseSpeed = 0.1f, float maxProgress = 1f)
+    public async Task OpenBox(
+        bool isIncreasing,
+        float progressSpeed = 0.05f,
+        float progressDecreaseSpeed = 0.1f,
+        float maxProgress = 1f
+    )
     {
         this.isIncreasing = isIncreasing;
         progress = 0;
@@ -29,29 +39,33 @@ public class BoxProgressOpen : MonoBehaviour
 
     public void InteruptOpening()
     {
-        if (!isOpening) return;
+        if (!isOpening)
+            return;
         ResetHandler();
     }
 
     public void StartIncreasingProgress()
     {
-        if (!isOpening) return;
+        if (!isOpening)
+            return;
         isIncreasing = true;
     }
 
     public void StartDecreasingProgress()
     {
-        if (!isOpening) return;
+        if (!isOpening)
+            return;
         isIncreasing = false;
     }
 
     public event Action<float> onProgressChanged;
     public event Action onOpeningTryEnded;
     public event Action onBoxOpened;
-    
+
     async Task OnOpen()
     {
-        if (isOpening) return; 
+        if (isOpening)
+            return;
         isOpening = true;
         Debug.Log("Open performed, starting progress...");
         System.Threading.CancellationToken cts = destroyCancellationToken;
@@ -63,9 +77,22 @@ public class BoxProgressOpen : MonoBehaviour
                 subscribeReset: (handler) => resetProgressEvent += handler,
                 unsubscribeReset: (handler) => resetProgressEvent -= handler,
                 increasing: increasing,
-                currentProgress: (p) => { progress = p; onProgressChanged?.Invoke(p);},
-                onBoxOpened: () => { Debug.Log("Box opened!"); onBoxOpened?.Invoke(); },
-                onEnded: () => { Debug.Log("Method ended."); isOpening = false; onOpeningTryEnded?.Invoke(); }
+                currentProgress: (p) =>
+                {
+                    progress = p;
+                    onProgressChanged?.Invoke(p);
+                },
+                onBoxOpened: () =>
+                {
+                    Debug.Log("Box opened!");
+                    onBoxOpened?.Invoke();
+                },
+                onEnded: () =>
+                {
+                    Debug.Log("Method ended.");
+                    isOpening = false;
+                    onOpeningTryEnded?.Invoke();
+                }
             );
         }
         catch (Exception ex)
@@ -74,7 +101,13 @@ public class BoxProgressOpen : MonoBehaviour
         }
     }
 
-    void ResetHandler() { resetProgressEvent?.Invoke(); Debug.Log("Reset performed"); progress = 0f; }
+    void ResetHandler()
+    {
+        resetProgressEvent?.Invoke();
+        Debug.Log("Reset performed");
+        progress = 0f;
+    }
+
     event Action resetProgressEvent;
 }
 
@@ -85,13 +118,17 @@ public class OpenProgress
     float progressDecreaseSpeed = 0.1f;
     float maxProgress = 1f;
 
-    public OpenProgress(float progressSpeed = 0.05f, float progressDecreaseSpeed = 0.1f, float maxProgress = 1f)
+    public OpenProgress(
+        float progressSpeed = 0.05f,
+        float progressDecreaseSpeed = 0.1f,
+        float maxProgress = 1f
+    )
     {
         this.progressSpeed = progressSpeed;
         this.progressDecreaseSpeed = progressDecreaseSpeed;
         this.maxProgress = maxProgress;
     }
-    
+
     public float GetProgress() => progress;
 
     public async Task StartOpening(
@@ -111,7 +148,12 @@ public class OpenProgress
             Debug.Log("Reset called");
         }
         subscribeReset(ResetHandler);
-        while (progress >= 0f && progress < maxProgress && !token.IsCancellationRequested && !resetCalled())
+        while (
+            progress >= 0f
+            && progress < maxProgress
+            && !token.IsCancellationRequested
+            && !resetCalled()
+        )
         {
             if (increasing())
             {

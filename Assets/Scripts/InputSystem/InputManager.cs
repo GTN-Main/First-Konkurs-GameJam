@@ -6,16 +6,26 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance { get; private set; }
 
     [Header("Input Settings")]
-    [SerializeField] private InputActionAsset globalInputAsset;
-    [SerializeField] private string globalInputAsset_defaultMap = "UI";
-    public InputActionMap CurrentMap_global { get; private set; }
-    [SerializeField] private InputActionAsset player1InputAsset;
-    [SerializeField] private string player1InputAsset_defaultMap = "Player";
-    public InputActionMap CurrentMap_player1 { get; private set; }
-    [SerializeField] private InputActionAsset player2InputAsset;
-    [SerializeField] private string player2InputAsset_defaultMap = "Player";
-    public InputActionMap CurrentMap_player2 { get; private set; }
+    [SerializeField]
+    private InputActionAsset globalInputAsset;
 
+    [SerializeField]
+    private string globalInputAsset_defaultMap = "UI";
+    public InputActionMap CurrentMap_global { get; private set; }
+
+    [SerializeField]
+    private InputActionAsset player1InputAsset;
+
+    [SerializeField]
+    private string player1InputAsset_defaultMap = "Player";
+    public InputActionMap CurrentMap_player1 { get; private set; }
+
+    [SerializeField]
+    private InputActionAsset player2InputAsset;
+
+    [SerializeField]
+    private string player2InputAsset_defaultMap = "Player";
+    public InputActionMap CurrentMap_player2 { get; private set; }
 
     private void Awake()
     {
@@ -33,14 +43,14 @@ public class InputManager : MonoBehaviour
         CurrentMap_player2 = player2InputAsset.FindActionMap(player2InputAsset_defaultMap);
     }
 
-    private void OnEnable() 
+    private void OnEnable()
     {
         globalInputAsset.Enable();
         player1InputAsset.Enable();
         player2InputAsset.Enable();
     }
 
-    private void OnDisable() 
+    private void OnDisable()
     {
         globalInputAsset.Disable();
         player1InputAsset.Disable();

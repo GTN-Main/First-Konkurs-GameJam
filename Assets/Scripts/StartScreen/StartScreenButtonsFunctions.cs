@@ -3,8 +3,12 @@ using UnityEngine;
 public class StartScreenButtonsFunctions : MonoBehaviour
 {
     bool rulesPanelActive;
-    [SerializeField] GameObject rulesPanel;
-    [SerializeField] GameObject startScreenPanel;
+
+    [SerializeField]
+    GameObject rulesPanel;
+
+    [SerializeField]
+    GameObject startScreenPanel;
 
     public void Start()
     {

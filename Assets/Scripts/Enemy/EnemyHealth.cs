@@ -15,7 +15,10 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (GameManager.Instance.GetCurrentGameStateTag() == GameManager.GameStateTag.LooseGame || GameManager.Instance.GetCurrentGameStateTag() == GameManager.GameStateTag.WonGame)
+        if (
+            GameManager.Instance.GetCurrentGameStateTag() == GameManager.GameStateTag.LooseGame
+            || GameManager.Instance.GetCurrentGameStateTag() == GameManager.GameStateTag.WonGame
+        )
             return;
         currentHealth -= damage;
         if (currentHealth <= 0)

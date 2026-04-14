@@ -6,13 +6,23 @@ using UnityEngine;
 public class HealthManager : MonoBehaviour, IInitializable
 {
     public static HealthManager Instance { get; private set; }
-    [SerializeField] int maxHealth = 50;
-    [SerializeField] int heartsUIHealthCount = 5;
 
-    private PlayerHealth player1Health, player2Health;
+    [SerializeField]
+    int maxHealth = 50;
 
-    [SerializeField] private PlayerHealthUI player1HealthUI, player2HealthUI;
-    [SerializeField] private GameObject panelPlayer1Health, panelPlayer2Health;
+    [SerializeField]
+    int heartsUIHealthCount = 5;
+
+    private PlayerHealth player1Health,
+        player2Health;
+
+    [SerializeField]
+    private PlayerHealthUI player1HealthUI,
+        player2HealthUI;
+
+    [SerializeField]
+    private GameObject panelPlayer1Health,
+        panelPlayer2Health;
     bool opened = false;
 
     private void Awake()
@@ -56,8 +66,9 @@ public class HealthManager : MonoBehaviour, IInitializable
             OnGameStart();
         }
 
-        if (!opened) return;
-        
+        if (!opened)
+            return;
+
         if (state.GetTag() == GameManager.GameStateTag.StartGame)
         {
             ShowHealthUI();
@@ -134,18 +145,42 @@ public class HealthManager : MonoBehaviour, IInitializable
         }
     }
 
-    public void UpdateHealthUI1(int forceHearts =  -1)
+    public void UpdateHealthUI1(int forceHearts = -1)
     {
-        DebugUtility.WriteInColor($"Updating Player 1 Health UI. Hearts: {forceHearts}", Color.yellow);
-        int player1HealthHearts = forceHearts >= 0 ? forceHearts : Mathf.Clamp(Mathf.CeilToInt((float)player1Health.CurrentHealth / maxHealth * heartsUIHealthCount), 0, heartsUIHealthCount);
+        DebugUtility.WriteInColor(
+            $"Updating Player 1 Health UI. Hearts: {forceHearts}",
+            Color.yellow
+        );
+        int player1HealthHearts =
+            forceHearts >= 0
+                ? forceHearts
+                : Mathf.Clamp(
+                    Mathf.CeilToInt(
+                        (float)player1Health.CurrentHealth / maxHealth * heartsUIHealthCount
+                    ),
+                    0,
+                    heartsUIHealthCount
+                );
 
         player1HealthUI.ShowHealthUI(player1HealthHearts);
     }
 
-    public void UpdateHealthUI2(int forceHearts =  -1)
+    public void UpdateHealthUI2(int forceHearts = -1)
     {
-        DebugUtility.WriteInColor($"Updating Player 2 Health UI. Hearts: {forceHearts}", Color.yellow);
-        int player2HealthHearts = forceHearts >= 0 ? forceHearts : Mathf.Clamp(Mathf.CeilToInt((float)player2Health.CurrentHealth / maxHealth * heartsUIHealthCount), 0, heartsUIHealthCount);
+        DebugUtility.WriteInColor(
+            $"Updating Player 2 Health UI. Hearts: {forceHearts}",
+            Color.yellow
+        );
+        int player2HealthHearts =
+            forceHearts >= 0
+                ? forceHearts
+                : Mathf.Clamp(
+                    Mathf.CeilToInt(
+                        (float)player2Health.CurrentHealth / maxHealth * heartsUIHealthCount
+                    ),
+                    0,
+                    heartsUIHealthCount
+                );
 
         player2HealthUI.ShowHealthUI(player2HealthHearts);
     }

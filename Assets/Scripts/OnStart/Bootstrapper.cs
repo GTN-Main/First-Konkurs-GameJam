@@ -1,10 +1,10 @@
-using UnityEngine;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public static class Bootstrapper
 {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-    async static Task OnStart()
+    static async Task OnStart()
     {
         DebugUtility.WriteInColor($"Bootstrapping...", Color.green);
         await Create();
@@ -12,7 +12,7 @@ public static class Bootstrapper
         await Init();
     }
 
-    async static Task Create()
+    static async Task Create()
     {
         UnityEngine.Object.DontDestroyOnLoad(
             UnityEngine.Object.Instantiate(
@@ -22,12 +22,12 @@ public static class Bootstrapper
         await Task.Yield();
     }
 
-    async static Task LoadData()
+    static async Task LoadData()
     {
         await SavesManager.Load();
     }
 
-    async static Task Init()
+    static async Task Init()
     {
         await TryInit(GameManager.Instance);
         await TryInit(PlayerSpawnManager.Instance);
@@ -37,7 +37,7 @@ public static class Bootstrapper
         await TryInit(WaterContainerManager.Instance);
         await TryInit(MyParticleSystem.Instance);
     }
-    
+
     static async Task TryInit(MonoBehaviour script)
     {
         if (script == null)

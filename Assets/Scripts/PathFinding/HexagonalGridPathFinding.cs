@@ -121,17 +121,12 @@ public class HexagonalGridPathFinding : MonoBehaviour
 
     bool isTracingPath = false;
 
-    void Update()
-    {
-        
-    }
+    void Update() { }
 
     [ContextMenu("GiveTestPlots")]
     public void GiveTestPlots()
     {
-        HexCell cellA = new HexCell(
-            HexCell.SnapToHex(from.transform.position)
-        );
+        HexCell cellA = new HexCell(HexCell.SnapToHex(from.transform.position));
         cellA.Plot(Color.yellow, 15);
         HexCell[] neighbors = cellA.GetNeighbors();
         foreach (HexCell neighbor in neighbors)
@@ -422,7 +417,6 @@ public class HexagonalGridPathFinding : MonoBehaviour
 
         public void Plot(Color color, float duration = 0.4f, bool onlyConnentions = false)
         {
-            
             Vector2[] frame = hexVertsPositions
                 .Select(n =>
                 {
@@ -434,14 +428,9 @@ public class HexagonalGridPathFinding : MonoBehaviour
                 {
                     Vector2 start = frame[i];
                     Vector2 end = frame[(i + 1) % frame.Length];
-                    Debug.DrawLine(
-                        start,
-                        end,
-                        color,
-                        duration
-                    );
+                    Debug.DrawLine(start, end, color, duration);
                 }
-                
+
             /*if (parentCell != null)
                 Debug.DrawLine(
                     this.coordinates,
@@ -476,7 +465,7 @@ public class HexagonalGridPathFinding : MonoBehaviour
             // redundant since we don't use s coordinate, but left for clarity and future reference
 
             // Convert back axial to world
-            float x = cellSideSize * sqrt3 * (rq + rr / 2f); 
+            float x = cellSideSize * sqrt3 * (rq + rr / 2f);
             float y = cellSideSize * 1.5f * rr;
 
             return new Vector2(x, y);

@@ -67,7 +67,10 @@ public class LookForTargetState : EnemyMovementState
         {
             if (nextPoint != null)
             {
-                if (Mathf.Abs(((Vector2)context.transform.position - nextPoint.Value).sqrMagnitude) < 0.2f)
+                if (
+                    Mathf.Abs(((Vector2)context.transform.position - nextPoint.Value).sqrMagnitude)
+                    < 0.2f
+                )
                 {
                     if (pathResult.path.Count > 0)
                     {
@@ -82,11 +85,7 @@ public class LookForTargetState : EnemyMovementState
                 }
 
                 dirForward = (nextPoint.Value - (Vector2)context.transform.position).normalized;
-                context
-                    .GetEnemy()
-                    .Move(
-                        dirForward * context.getIdleWalkingSpeed * Time.deltaTime
-                    );
+                context.GetEnemy().Move(dirForward * context.getIdleWalkingSpeed * Time.deltaTime);
             }
         }
         catch (System.Exception ex)

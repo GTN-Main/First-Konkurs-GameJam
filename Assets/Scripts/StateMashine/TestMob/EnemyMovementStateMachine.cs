@@ -50,7 +50,9 @@ public class EnemyMovementStateMachine : StateManager<EnemyMovementStateMachine.
 
     void Awake()
     {
-        context.SetNewTarget(() => PlayersPosManager.Instance.GetClosestPlayerToPoint(context.GetTransform().position));
+        context.SetNewTarget(() =>
+            PlayersPosManager.Instance.GetClosestPlayerToPoint(context.GetTransform().position)
+        );
         InitializeStates();
     }
 

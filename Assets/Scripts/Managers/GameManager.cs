@@ -7,11 +7,14 @@ public class GameManager : MonoBehaviour, IInitializable
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField] private Camera mainCamera;
-    [SerializeField] private CameraController cC;
+    [SerializeField]
+    private Camera mainCamera;
+
+    [SerializeField]
+    private CameraController cC;
 
     public Camera GetCamera() => mainCamera;
-    
+
     public enum GameStateTag
     {
         StartScreen,
@@ -19,7 +22,7 @@ public class GameManager : MonoBehaviour, IInitializable
         WonGame,
         LooseGame,
         EndScreenVictory,
-        EndScreenDefeat
+        EndScreenDefeat,
     }
 
     void Awake()
@@ -32,8 +35,11 @@ public class GameManager : MonoBehaviour, IInitializable
         Instance = this;
     }
 
-    [SerializeField] private GameStateTag startGameSceneName = GameStateTag.StartScreen;
-    [SerializeField] private List<GameState> gameStates = new List<GameState>();
+    [SerializeField]
+    private GameStateTag startGameSceneName = GameStateTag.StartScreen;
+
+    [SerializeField]
+    private List<GameState> gameStates = new List<GameState>();
     public GameState currentGameState { get; private set; }
 
     public async Task Init()
@@ -61,7 +67,8 @@ public class GameManager : MonoBehaviour, IInitializable
         OnGameStateChanged?.Invoke(currentGameState);
     }
 
-    public GameStateTag GetCurrentGameStateTag() => currentGameState?.GetTag() ?? GameStateTag.StartScreen;
+    public GameStateTag GetCurrentGameStateTag() =>
+        currentGameState?.GetTag() ?? GameStateTag.StartScreen;
 
     public async Task StartGame()
     {
@@ -95,7 +102,8 @@ public class GameManager : MonoBehaviour, IInitializable
         ChangeGameState(GameStateTag.StartScreen);
     }
 
-    public static bool CanPlayersReturnToEndArea() => WaterContainerManager.Instance.IsWaterLevelFull();
+    public static bool CanPlayersReturnToEndArea() =>
+        WaterContainerManager.Instance.IsWaterLevelFull();
 
     public event System.Action<GameState> OnGameStateChanged;
 
@@ -109,7 +117,9 @@ public class GameManager : MonoBehaviour, IInitializable
         GameObject camPrefab = Resources.Load<GameObject>("Prefabs/Setup/MainCamera");
         if (camPrefab == null)
         {
-            Debug.LogError("Main camera prefab not found in Resources/Prefabs/Setup/MainCamera. Please ensure it exists.");
+            Debug.LogError(
+                "Main camera prefab not found in Resources/Prefabs/Setup/MainCamera. Please ensure it exists."
+            );
             return;
         }
         mainCamera = Instantiate(camPrefab).GetComponent<Camera>();

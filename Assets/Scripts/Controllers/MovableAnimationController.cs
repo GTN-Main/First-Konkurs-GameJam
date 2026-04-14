@@ -7,9 +7,11 @@ using UnityEngine;
 public class MovableAnimationController : MonoBehaviour
 {
     Animator animator;
-    public Dictionary<string, AnimationClip> animationActions = new Dictionary<string, AnimationClip>();
+    public Dictionary<string, AnimationClip> animationActions =
+        new Dictionary<string, AnimationClip>();
 
-    string currentActionName, previousActionName;
+    string currentActionName,
+        previousActionName;
 
     protected void Init(Animator animator, Dictionary<string, AnimationClip> animationActions)
     {
@@ -34,7 +36,9 @@ public class MovableAnimationController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"Animation action '{currentActionName}' not found in the animation actions dictionary.");
+            Debug.LogWarning(
+                $"Animation action '{currentActionName}' not found in the animation actions dictionary."
+            );
         }
 
         previousActionName = currentActionName;

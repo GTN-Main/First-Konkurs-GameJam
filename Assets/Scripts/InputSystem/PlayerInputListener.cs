@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum PlayerTag { Player1, Player2 }
+public enum PlayerTag
+{
+    Player1,
+    Player2,
+}
+
 public class PlayerInputListener : MonoBehaviour
 {
     public static PlayerInputListener Instance { get; private set; }
 
-    Dictionary<PlayerTag, PlayerInputData> playerInputs = new Dictionary<PlayerTag, PlayerInputData>()
+    Dictionary<PlayerTag, PlayerInputData> playerInputs = new Dictionary<
+        PlayerTag,
+        PlayerInputData
+    >()
     {
         { PlayerTag.Player1, new PlayerInputData() },
-        { PlayerTag.Player2, new PlayerInputData() }
+        { PlayerTag.Player2, new PlayerInputData() },
     };
 
     void OnEnable()
@@ -73,6 +81,7 @@ public class PlayerInputData
     InputAction move_action;
     InputAction interact_action;
     InputAction attack_action;
+
     public void SetActionMap(InputActionMap Action)
     {
         _action = Action;
@@ -81,13 +90,13 @@ public class PlayerInputData
         attack_action = _action?.FindAction("Attack");
     }
 
-
     #region Movement properties
     public bool up => move_action != null ? move_action.ReadValue<Vector2>().y > 0 : false;
     public bool right => move_action != null ? move_action.ReadValue<Vector2>().x > 0 : false;
     public bool down => move_action != null ? move_action.ReadValue<Vector2>().y < 0 : false;
     public bool left => move_action != null ? move_action.ReadValue<Vector2>().x < 0 : false;
-    public Vector2 direction => move_action != null ? move_action.ReadValue<Vector2>() : Vector2.zero;
+    public Vector2 direction =>
+        move_action != null ? move_action.ReadValue<Vector2>() : Vector2.zero;
     #endregion
 
     #region Interaction properties

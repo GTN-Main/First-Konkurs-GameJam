@@ -6,9 +6,10 @@ public class PlayerSpawnManager : MonoBehaviour, IInitializable
     [SerializeField]
     GameObject playerPrefabGirl;
     [SerializeField]
-    GameObject playerPrefabFasolka;
+    Color player1Color = Color.blue, player2Color = Color.red;
 
-    public PlayerController Player1, Player2;
+    public PlayerController Player1,
+        Player2;
 
     public static PlayerSpawnManager Instance { get; private set; }
 
