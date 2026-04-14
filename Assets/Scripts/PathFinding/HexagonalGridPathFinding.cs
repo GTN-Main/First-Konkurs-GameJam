@@ -422,7 +422,7 @@ public class HexagonalGridPathFinding : MonoBehaviour
 
         public void Plot(Color color, float duration = 0.4f, bool onlyConnentions = false)
         {
-            return;
+            
             Vector2[] frame = hexVertsPositions
                 .Select(n =>
                 {

@@ -158,4 +158,22 @@ public class BoxesSpawnManager : MonoBehaviour, IInitializable
             isSpawnPointOccupied[index] = false;
         }
     }
+
+    public Vector3? GetClosestBoxPositionToPoint(Vector3 point)
+    {
+        try
+        {
+            if (spawnedBoxes == null || spawnedBoxes.Count == 0)
+            {
+                return null;
+            }
+
+            Box closestBox = spawnedBoxes.OrderBy(box => (box.transform.position - point).sqrMagnitude).FirstOrDefault();
+            return closestBox != null ? closestBox.transform.position : null;
+        }
+        catch
+        {
+            return null;
+        }
+    }
 }

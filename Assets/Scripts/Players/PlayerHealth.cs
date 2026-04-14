@@ -13,10 +13,13 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (GameManager.Instance.GetCurrentGameStateTag() == GameManager.GameStateTag.LooseGame || GameManager.Instance.GetCurrentGameStateTag() == GameManager.GameStateTag.WonGame)
+            return;
         currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         if (currentHealth <= 0)
         {
-            Die();
+            Die(GetComponent<PlayerController>().GetPlayerTag());
         }
     }
 
@@ -31,12 +34,12 @@ public class PlayerHealth : MonoBehaviour
 
     public int CurrentHealth => currentHealth;
 
-    void Die()
+    void Die(PlayerTag playerTag)
     {
         // Handle player death (play animation, disable controls, etc.)
         Debug.Log("One player has died.");
-        OnPlayerDied?.Invoke();
+        OnPlayerDied?.Invoke(playerTag);
     }
     
-    public event System.Action OnPlayerDied;
+    public event System.Action<PlayerTag> OnPlayerDied;
 }

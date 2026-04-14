@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4a9c6fdc06265240849f52f326c32b3, type: 3}
-  m_Name: EndGame
+  m_Name: EndScreenVictory
   m_EditorClassIdentifier: Assembly-CSharp::GameState
-  gameStateTag: 2
-  sceneAsset: {fileID: 0}
-  sceneName: 
+  gameStateTag: 4
+  sceneAsset: {fileID: 102900000, guid: 65d99ee6de86e14469466d7dda102950, type: 3}
+  sceneName: EndScreenVictory

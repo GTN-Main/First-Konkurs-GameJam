@@ -16,6 +16,9 @@ public class GrenadeExplode : MonoBehaviour
     [SerializeField] private Transform fillImageT;
     [SerializeField] private Vector2 aspectRatioSize;
     [SerializeField] AnimationCurve moveOverTimeCurve;
+    [SerializeField] private Transform flameImageT;
+    [SerializeField] private Vector2 flameStartPos;
+    [SerializeField] private Vector2 flameEndPos;
 
     Rigidbody2D rb;
 
@@ -32,6 +35,29 @@ public class GrenadeExplode : MonoBehaviour
         this.damageableLayers = damageableLayers;
     }
 
+    void OnEnable()
+    {
+        GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+    }
+
+    void OnDisable()
+    {
+        GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+    }
+
+    void OnDestroy()
+    {
+        GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+    }
+
+    private void OnGameStateChanged(GameState state)
+    {
+        if (state.GetTag() == GameManager.GameStateTag.LooseGame || state.GetTag() == GameManager.GameStateTag.WonGame)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public void Run()
     {
         if (rb == null)
@@ -39,8 +65,9 @@ public class GrenadeExplode : MonoBehaviour
             rb = GetComponent<Rigidbody2D>();
         }
         StartCoroutine(MoveRoutine());
-        Explode();
         VisualizeExplosionRadius();
+        VisualizeFlame();
+        Explode();
     }
 
     IEnumerator MoveRoutine()
@@ -83,7 +110,10 @@ public class GrenadeExplode : MonoBehaviour
                 enemyHealth.TakeDamage(explosionDamage);
             }
         }
-        // add particle effect
+        MyParticleSystem mP = MyParticleSystem.Instance;
+        if (mP == null)
+            Debug.LogError("MyParticleSystem instance is null!");
+        MyParticleSystem.Instance.DoEffect("Boom", transform.position, 1f);
         Destroy(gameObject);
     }
 
@@ -110,6 +140,26 @@ public class GrenadeExplode : MonoBehaviour
             float currentDiameter = Mathf.Lerp(0f, maxDiameter, t);
 
             fillImageT.localScale = Vector2.one * aspectRatioSize * currentDiameter;
+            elapsedTime += Time.deltaTime;
+            await Task.Yield();
+        }
+    }
+
+    async Task VisualizeFlame()
+    {
+        if (flameImageT == null)
+        {
+            Debug.LogError("Flame object is null");
+        }
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < explosionDelay)
+        {
+            float t = elapsedTime / explosionDelay;
+            Vector2 pos = Vector2.Lerp(flameStartPos, flameEndPos, t);
+
+            flameImageT.localPosition = pos;
             elapsedTime += Time.deltaTime;
             await Task.Yield();
         }

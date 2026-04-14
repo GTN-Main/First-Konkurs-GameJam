@@ -7,6 +7,7 @@ public class PlayerGirlAnimationController : MovableAnimationController
     [SerializeField] AnimationClip UpWalk, DownWalk, LeftWalk, RightWalk, Stand;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Vector2 velocityVector;
+    bool isGameOver = false;
 
     void Start()
     {
@@ -21,10 +22,35 @@ public class PlayerGirlAnimationController : MovableAnimationController
         );
 
         ChangeAnim(MovementPrinciples.MovableDirectionToString(currentDirection));
+        isGameOver = false;
+    }
+
+    void OnEnable()
+    {
+        GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+    }
+
+    void OnDisable()
+    {
+        GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+    }
+
+    void OnDestroy()
+    {
+        GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+    }
+
+    private void OnGameStateChanged(GameState state)
+    {
+        if (state.GetTag() == GameManager.GameStateTag.LooseGame || state.GetTag() == GameManager.GameStateTag.WonGame)
+        {
+            isGameOver = true;
+        }
     }
 
     void FixedUpdate()
     {
+        if (isGameOver) return;
         Vector2 movementVector = GetVelocityVector();
         velocityVector = new Vector2(Mathf.Round(movementVector.x), Mathf.Round(movementVector.y));
         var movableDirection = MovementPrinciples.GetDirectionFromMoveVector(velocityVector);

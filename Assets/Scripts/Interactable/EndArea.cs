@@ -37,7 +37,7 @@ public class EndArea : MonoBehaviour
             percentageToEnd += Time.deltaTime / timeToFill;
             if (percentageToEnd >= 1f)
             {
-                GameManager.Instance.EndGame();
+                GameManager.Instance.WonGame();
             }
         }
         else
@@ -76,7 +76,7 @@ public class EndArea : MonoBehaviour
         if (sliderEndArea.value >= 1)
         {
             sliderEndArea.transform.localScale = Vector3.Lerp(sliderEndArea.transform.localScale, Vector2.one * 150, Time.deltaTime * 0.25f);
-            sliderFill.color = Color.Lerp(sliderFill.color, colorEndScreen, Time.deltaTime * 1.2f);
+            sliderFill.color = Color.Lerp(sliderFill.color, colorEndScreen, Time.deltaTime * 3f);
         }
     }
 

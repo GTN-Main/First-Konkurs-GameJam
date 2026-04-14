@@ -17,6 +17,31 @@ public class PlayerController : MonoBehaviour
         pA = GetComponent<PlayerAttack>();
     }
 
+    void OnEnable()
+    {
+        GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+    }
+
+    void OnDisable()
+    {
+        GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+    }
+
+    void OnDestroy()
+    {
+        GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+    }
+
+    private void OnGameStateChanged(GameState state)
+    {
+        if (state.GetTag() == GameManager.GameStateTag.LooseGame || state.GetTag() == GameManager.GameStateTag.WonGame)
+        {
+            rb.simulated = false;
+            pA.enabled = false;
+            this.enabled = false;
+        }
+    }
+
     void FixedUpdate()
     {
         var playerInput = PlayerInputListener.Instance?.GetPlayerInput(playerTag);

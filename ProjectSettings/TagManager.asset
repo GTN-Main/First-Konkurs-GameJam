@@ -19,7 +19,7 @@ TagManager:
   - Enemies
   - Obstacle
   - Weapons
-  - 
+  - WeaponsOverWall
   - 
   - 
   - 
@@ -55,6 +55,9 @@ TagManager:
     locked: 0
   - name: Action
     uniqueID: 3532221215
+    locked: 0
+  - name: Weapons
+    uniqueID: 2376863579
     locked: 0
   - name: WorldUI
     uniqueID: 1433161503

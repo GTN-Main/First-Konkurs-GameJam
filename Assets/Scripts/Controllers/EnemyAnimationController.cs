@@ -11,6 +11,7 @@ public class EnemyAnimationController : MovableAnimationController
     [SerializeField] Sprite[] variants_front;
     [SerializeField] Sprite[] variants_back;
     [SerializeField] int variantIndex = 0;
+    bool isGameOver = false;
 
     void Start()
     {
@@ -36,10 +37,35 @@ public class EnemyAnimationController : MovableAnimationController
         }
 
         variantIndex = Random.Range(0, variants_front.Length);
+        isGameOver = false;
+    }
+
+    void OnEnable()
+    {
+        GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+    }
+
+    void OnDisable()
+    {
+        GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+    }
+
+    void OnDestroy()
+    {
+        GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+    }
+
+    private void OnGameStateChanged(GameState state)
+    {
+        if (state.GetTag() == GameManager.GameStateTag.LooseGame || state.GetTag() == GameManager.GameStateTag.WonGame)
+        {
+            isGameOver = true;
+        }
     }
 
     void FixedUpdate()
     {
+        if (isGameOver) return;
         Vector2 movementVector = GetVelocityVector();
         velocityVector = new Vector2(Mathf.Round(movementVector.x), Mathf.Round(movementVector.y));
         var movableDirection = MovementPrinciples.GetDirectionFromMoveVector(velocityVector);

@@ -40,8 +40,8 @@ public class HealthManager : MonoBehaviour, IInitializable
 
     void OnDisable()
     {
-        player1Health.OnPlayerDied -= OnGameOver;
-        player2Health.OnPlayerDied -= OnGameOver;
+        player1Health.OnPlayerDied -= OnOnePlayerDied;
+        player2Health.OnPlayerDied -= OnOnePlayerDied;
         player1Health = null;
         player2Health = null;
         GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
@@ -115,6 +115,10 @@ public class HealthManager : MonoBehaviour, IInitializable
             {
                 UpdateHealthUI1();
             }
+            else
+            {
+                UpdateHealthUI1(0);
+            }
         }
         else if (playerTag == PlayerTag.Player2)
         {
@@ -123,19 +127,25 @@ public class HealthManager : MonoBehaviour, IInitializable
             {
                 UpdateHealthUI2();
             }
+            else
+            {
+                UpdateHealthUI2(0);
+            }
         }
     }
 
-    public void UpdateHealthUI1()
+    public void UpdateHealthUI1(int forceHearts =  -1)
     {
-        int player1HealthHearts = Mathf.Clamp(Mathf.CeilToInt((float)player1Health.CurrentHealth / maxHealth * heartsUIHealthCount), 0, heartsUIHealthCount);
+        DebugUtility.WriteInColor($"Updating Player 1 Health UI. Hearts: {forceHearts}", Color.yellow);
+        int player1HealthHearts = forceHearts >= 0 ? forceHearts : Mathf.Clamp(Mathf.CeilToInt((float)player1Health.CurrentHealth / maxHealth * heartsUIHealthCount), 0, heartsUIHealthCount);
 
         player1HealthUI.ShowHealthUI(player1HealthHearts);
     }
 
-    public void UpdateHealthUI2()
+    public void UpdateHealthUI2(int forceHearts =  -1)
     {
-        int player2HealthHearts = Mathf.Clamp(Mathf.CeilToInt((float)player2Health.CurrentHealth / maxHealth * heartsUIHealthCount), 0, heartsUIHealthCount);
+        DebugUtility.WriteInColor($"Updating Player 2 Health UI. Hearts: {forceHearts}", Color.yellow);
+        int player2HealthHearts = forceHearts >= 0 ? forceHearts : Mathf.Clamp(Mathf.CeilToInt((float)player2Health.CurrentHealth / maxHealth * heartsUIHealthCount), 0, heartsUIHealthCount);
 
         player2HealthUI.ShowHealthUI(player2HealthHearts);
     }
@@ -157,18 +167,27 @@ public class HealthManager : MonoBehaviour, IInitializable
         player1HealthUI.Init(heartsUIHealthCount);
         player2HealthUI.Init(heartsUIHealthCount);
 
-        player1Health.OnPlayerDied += OnGameOver;
-        player2Health.OnPlayerDied += OnGameOver;
+        player1Health.OnPlayerDied += OnOnePlayerDied;
+        player2Health.OnPlayerDied += OnOnePlayerDied;
     }
 
-    public void OnGameOver()
+    public void OnOnePlayerDied(PlayerTag playerTag)
     {
         // Handle game over logic (e.g., show game over screen, reset the game, etc.)
-        player1Health.OnPlayerDied -= OnGameOver;
-        player2Health.OnPlayerDied -= OnGameOver;
+        player1Health.OnPlayerDied -= OnOnePlayerDied;
+        player2Health.OnPlayerDied -= OnOnePlayerDied;
         player1Health = null;
         player2Health = null;
         opened = false;
-        Debug.Log("Game Over!");
+
+        if (playerTag == PlayerTag.Player1)
+        {
+            UpdateHealthUI1(0);
+        }
+        else if (playerTag == PlayerTag.Player2)
+        {
+            UpdateHealthUI2(0);
+        }
+        GameManager.Instance?.LooseGame();
     }
 }

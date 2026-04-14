@@ -566,8 +566,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthUI
   healthPanel: {fileID: 2642245810016008452}
   healthHeartPrefab: {fileID: 3491671573911354234, guid: f5aed56a8433e2e489c1f7194bd8e0d6, type: 3}
-  fullHeartSprite: {fileID: 21300000, guid: 21107b6399a59844d863f6217764af22, type: 3}
-  emptyHeartSprite: {fileID: 21300000, guid: 90aee9045ebd1c5449ecbc6e3b674066, type: 3}
+  fullHeartSprite: {fileID: 21300000, guid: 5eb34b1ae9cd3c049a7bc7dc1afa63a4, type: 3}
+  emptyHeartSprite: {fileID: 21300000, guid: e5362364d6d6a4f44a08c41f20703fb0, type: 3}
 --- !u!1 &2899242724566403888
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,8 +933,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthUI
   healthPanel: {fileID: 3872842483167259838}
   healthHeartPrefab: {fileID: 3491671573911354234, guid: f5aed56a8433e2e489c1f7194bd8e0d6, type: 3}
-  fullHeartSprite: {fileID: 21300000, guid: 21107b6399a59844d863f6217764af22, type: 3}
-  emptyHeartSprite: {fileID: 21300000, guid: 90aee9045ebd1c5449ecbc6e3b674066, type: 3}
+  fullHeartSprite: {fileID: 21300000, guid: 5eb34b1ae9cd3c049a7bc7dc1afa63a4, type: 3}
+  emptyHeartSprite: {fileID: 21300000, guid: e5362364d6d6a4f44a08c41f20703fb0, type: 3}
 --- !u!1 &4054834609850272280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,7 +1581,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2326665179036178928
 RectTransform:
   m_ObjectHideFlags: 0

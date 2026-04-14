@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
 
     private bool canRun = false;
 
-    void Start()
+    public void Init()
     {
         _cam = GetComponent<Camera>();
         _rb1 = PlayerSpawnManager.Instance?.Player1?.GetComponent<Rigidbody2D>();

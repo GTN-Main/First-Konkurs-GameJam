@@ -37,6 +37,8 @@ public class EnemiesSpawnManager : MonoBehaviour, IInitializable
 
     void Update()
     {
+        if (currentWaveSize == 0) return;
+        
         if (canSpawn && _enemiesToSpawn > 0 && !isNowSpawningEnemy)
         {
             SpawnEnemy();

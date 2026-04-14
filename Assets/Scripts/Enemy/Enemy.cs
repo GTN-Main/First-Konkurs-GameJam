@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     Rigidbody2D rb;
     CapsuleCollider2D capsule;
     EnemyHealth health;
+    EnemyAttack enemyAttack;
+    EnemyMovementStateMachine movementStateMachine;
 
     [SerializeField]
     float separationTimerInterval = 1f;
@@ -20,9 +22,46 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         capsule = GetComponent<CapsuleCollider2D>();
         health = GetComponent<EnemyHealth>();
+        enemyAttack = GetComponent<EnemyAttack>();
+        if (enemyAttack == null)
+            Debug.LogError("EnemyAttack component is missing!");
+        movementStateMachine = GetComponent<EnemyMovementStateMachine>();
+        if (movementStateMachine == null)
+            Debug.LogError("EnemyMovementStateMachine component is missing!");
         health.OnDeath += Die;
     }
-    Vector2 separationVector = Vector2.zero;
+
+    void OnEnable()
+    {
+        GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+    }
+
+    void OnDisable()
+    {
+        GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+    }
+
+    void OnDestroy()
+    {
+        GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+    }
+
+    private void OnGameStateChanged(GameState state)
+    {
+        if (state.GetTag() == GameManager.GameStateTag.LooseGame || state.GetTag() == GameManager.GameStateTag.WonGame)
+        {
+            OnGameOver();
+        }
+    }
+
+    void OnGameOver()
+    {
+        rb.simulated = false;
+        this.enabled = false;
+        movementStateMachine.enabled = false;
+        enemyAttack.enabled = false;
+    }
+
     Vector2 desiredVelocity = Vector2.zero;
     Vector2 _localdesiredVelocity = Vector2.zero;
     void FixedUpdate()
@@ -38,11 +77,11 @@ public class Enemy : MonoBehaviour
         Debug.DrawRay(transform.position, separationVector * separationStrength, Color.white);*/
 
         Vector2 velocityNormalized = _localdesiredVelocity.normalized;
-        Vector2 finalVelocity = MovementPrinciples.GetAdjustedMovementCapsule(transform, velocityNormalized, capsule, 0.05f, LayerMask.GetMask("Obstacle")) * _localdesiredVelocity.magnitude;
-        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, finalVelocity, Time.fixedDeltaTime * 10f);
+        //Vector2 finalVelocity = MovementPrinciples.GetAdjustedMovementCapsule(transform, velocityNormalized, capsule, 0.05f, LayerMask.GetMask("Obstacle")) * _localdesiredVelocity.magnitude;
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, _localdesiredVelocity, Time.fixedDeltaTime * 15f);
         Debug.DrawRay(transform.position, _localdesiredVelocity, Color.green);
         Debug.DrawRay(transform.position, desiredVelocity, Color.blue);
-        Debug.DrawRay(transform.position, finalVelocity, Color.crimson);
+        //Debug.DrawRay(transform.position, finalVelocity, Color.crimson);
 
         _localdesiredVelocity = Vector2.Lerp(_localdesiredVelocity, desiredVelocity, Time.fixedDeltaTime * 15f);
     }
@@ -54,7 +93,7 @@ public class Enemy : MonoBehaviour
 
     public void MakeAttack(GameObject target)
     {
-        //sth
+        enemyAttack.DoAttack(target);
         Debug.Log($"Attacking {target.name}");
     }
 

@@ -180,7 +180,7 @@ MonoBehaviour:
   boxPrefab: {fileID: 5597526955484530973, guid: 1f3f594ca35600442acbe86d79c5360d, type: 3}
   spawnPoints: []
   isSpawnPointOccupied: 
-  startWaveSize: 3
+  startWaveSize: 1
   spawnInterval: 4
   spawnedBoxes: []
 --- !u!1 &2406099549246029718
@@ -278,7 +278,7 @@ MonoBehaviour:
   spawnPoints: []
   canSpawn: 0
   waveNumber: 0
-  startWaveSize: 3
+  startWaveSize: 2
   nextWaveSizeGrowth: 1.2
   currentWaveSize: 0
   spawnInterval: 1
@@ -614,6 +614,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4670122114960999126}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7365977454342068866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5236863426691130038}
+  - component: {fileID: 2378064021424827395}
+  m_Layer: 0
+  m_Name: MyPerticleSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5236863426691130038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7365977454342068866}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1365261153344470985}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2378064021424827395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7365977454342068866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669987d9d109de544a24ff9f739fcb76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MyParticleSystem
+  prefabs: []
 --- !u!1 &7550081418104435442
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,6 +758,7 @@ Transform:
   - {fileID: 7993288957485830181}
   - {fileID: 5483779975747236806}
   - {fileID: 4670122114960999126}
+  - {fileID: 5236863426691130038}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8961022538535095778
@@ -759,6 +805,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b12d9e1864602a44b43fdb481f75338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  mainCamera: {fileID: 0}
+  cC: {fileID: 0}
   startGameSceneName: 0
   gameStates: []
 --- !u!1 &9028270443604441403
@@ -831,6 +879,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1365261153344470985}
     m_Modifications:
+    - target: {fileID: 1173933631040241348, guid: 29339b46dace042428c3319e4befc135, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1390761345554035970, guid: 29339b46dace042428c3319e4befc135, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1512849317812718762, guid: 29339b46dace042428c3319e4befc135, type: 3}
       propertyPath: m_Name
       value: GlobalCanvas
@@ -915,8 +971,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7373885840090901319, guid: 29339b46dace042428c3319e4befc135, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1390761345554035970, guid: 29339b46dace042428c3319e4befc135, type: 3}
+    - {fileID: 1173933631040241348, guid: 29339b46dace042428c3319e4befc135, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29339b46dace042428c3319e4befc135, type: 3}
