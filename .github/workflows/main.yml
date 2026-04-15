@@ -51,3 +51,4 @@ jobs:
     with:
         webhookTitle: Nowa wersja gry na GameJam!
         webhookMessage: Wciąż nie mamy wybranej nazwy.
+    secrets: inherit
