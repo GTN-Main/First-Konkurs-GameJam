@@ -85,7 +85,9 @@ public class LookForTargetState : EnemyMovementState
                 }
 
                 dirForward = (nextPoint.Value - (Vector2)context.transform.position).normalized;
-                context.GetEnemy().Move(dirForward * context.getIdleWalkingSpeed * Time.fixedDeltaTime);
+                context
+                    .GetEnemy()
+                    .Move(dirForward * context.getIdleWalkingSpeed * Time.fixedDeltaTime);
             }
         }
         catch (System.Exception ex)

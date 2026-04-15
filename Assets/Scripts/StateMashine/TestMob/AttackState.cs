@@ -35,7 +35,9 @@ public class AttackState : EnemyMovementState
 
         if (mustBeCloser)
             // Attack (move towards the target)
-            context.GetEnemy().Move(dirForward * context.getIdleWalkingSpeed * Time.fixedDeltaTime);
+            context
+                .GetEnemy()
+                .Move(dirForward * context.getIdleWalkingSpeed * Time.fixedDeltaTime);
         else
         {
             if (attackCooldown <= 0f)

@@ -113,7 +113,10 @@ public class GrenadeExplode : MonoBehaviour
         Vector2 targetPosition = startPosition + movementVector.normalized * movementDistance;
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(targetPosition, explosionRadius);
-        Gizmos.DrawWireSphere(targetPosition, explosionRadius * aspectRatioSize.y / aspectRatioSize.x);
+        Gizmos.DrawWireSphere(
+            targetPosition,
+            explosionRadius * aspectRatioSize.y / aspectRatioSize.x
+        );
     }
 
     IEnumerator MoveRoutine()
@@ -148,12 +151,18 @@ public class GrenadeExplode : MonoBehaviour
     {
         var c = this.AddComponent<CapsuleCollider2D>();
         c.direction = CapsuleDirection2D.Horizontal;
-        c.size = new Vector2(explosionRadius*2f+0.1f, explosionRadius*2f * aspectRatioSize.y / aspectRatioSize.x+0.1f);
+        c.size = new Vector2(
+            explosionRadius * 2f + 0.1f,
+            explosionRadius * 2f * aspectRatioSize.y / aspectRatioSize.x + 0.1f
+        );
         c.isTrigger = true;
         await Task.Delay(Mathf.RoundToInt(movementTime * 1000));
         Collider2D[] hitColliders = Physics2D.OverlapCapsuleAll(
             transform.position,
-            new Vector2(explosionRadius*2f+0.1f, explosionRadius*2f * aspectRatioSize.y / aspectRatioSize.x+0.1f),
+            new Vector2(
+                explosionRadius * 2f + 0.1f,
+                explosionRadius * 2f * aspectRatioSize.y / aspectRatioSize.x + 0.1f
+            ),
             CapsuleDirection2D.Horizontal,
             0,
             damageableLayers
