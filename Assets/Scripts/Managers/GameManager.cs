@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour, IInitializable
     {
         DebugUtility.WriteInColor($"Starting game...", Color.green);
         await ChangeGameState(GameStateTag.StartGame);
+        mainCamera.transform.position = new Vector3(0, 0, -10);
         cC.Init();
         cC.enabled = true;
     }
@@ -104,6 +105,7 @@ public class GameManager : MonoBehaviour, IInitializable
     {
         DebugUtility.WriteInColor($"Returning to start screen...", Color.green);
         ChangeGameState(GameStateTag.StartScreen);
+        mainCamera.transform.position = new Vector3(0, 0, -10);
     }
 
     public static bool CanPlayersReturnToEndArea() =>

@@ -10,7 +10,7 @@ public class LookForTargetState : EnemyMovementState
     Vector2 dirForward = Vector2.zero;
     Vector2? nextPoint = null;
     float findNewRouteTimer = 0f;
-    float findNewRouteInterval = 0.4f;
+    float findNewRouteInterval = 1.5f;
 
     public LookForTargetState(
         EnemyMovementContext context,
@@ -52,7 +52,7 @@ public class LookForTargetState : EnemyMovementState
             findNewRouteTimer = 0f;
             WaitForPath();
         }
-        findNewRouteTimer += Time.deltaTime;
+        findNewRouteTimer += Time.fixedDeltaTime;
 
         if (
             nextPoint == null
@@ -85,7 +85,7 @@ public class LookForTargetState : EnemyMovementState
                 }
 
                 dirForward = (nextPoint.Value - (Vector2)context.transform.position).normalized;
-                context.GetEnemy().Move(dirForward * context.getIdleWalkingSpeed * Time.deltaTime);
+                context.GetEnemy().Move(dirForward * context.getIdleWalkingSpeed * Time.fixedDeltaTime);
             }
         }
         catch (System.Exception ex)
@@ -95,7 +95,7 @@ public class LookForTargetState : EnemyMovementState
 
         EnemyMovementContext.ERing currentRing = context.GetCurrentRingByPosition();
         context.DebugDrawRings(currentRing);
-        context.UpdateTimers(Time.deltaTime, currentRing);
+        context.UpdateTimers(Time.fixedDeltaTime, currentRing);
     }
 
     public override void ExitState()

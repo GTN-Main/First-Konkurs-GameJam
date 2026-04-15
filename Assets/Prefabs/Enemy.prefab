@@ -1246,7 +1246,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.96, y: 1.48}
+  m_Size: {x: 0.78, y: 1.43}
   m_Direction: 0
 --- !u!114 &50053044405360126
 MonoBehaviour:
@@ -1260,7 +1260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 833804000627cb342836eb2ef8ede7e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  attackCooldown: 0.2
+  attackCooldown: 0.5
   separationStrength: 1
   fasolkaAnimationController: {fileID: 6165402872783558294}
   separationTimerInterval: 1
@@ -1281,7 +1281,7 @@ MonoBehaviour:
     controlledEnemy: {fileID: 50053044405360126}
     rb: {fileID: 5014189020126631962}
     IdleRotationSpeed: 2
-    IdleWalkingSpeed: 150
+    IdleWalkingSpeed: 80
     IdleCrossInterference: -1
     IdleNoTurningRadius: 1
     IdleMaxRadius: 2
@@ -1289,8 +1289,8 @@ MonoBehaviour:
     IdleStandingRapidness: 0.3
     IdleStandingThreshold: 0.4
     ring1Radius: 100
-    ring2Radius: 5
-    ring3Radius: 5
+    ring2Radius: 6
+    ring3Radius: 4
     minIdleSwitchTime: 1
     minLookForSwitchTime: 1
     minKeepSafeDistanceSwitchTime: 1

@@ -959,8 +959,8 @@ MonoBehaviour:
   spawnPoints: []
   canSpawn: 0
   waveNumber: 0
-  startWaveSize: 5
-  nextWaveSizeGrowth: 1.5
+  startWaveSize: 4
+  nextWaveSizeGrowth: 1.8
   currentWaveSize: 0
   spawnInterval: 1
   spawnedEnemies: []

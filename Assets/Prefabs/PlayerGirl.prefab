@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   playerTag: 0
-  speed: 5
+  speed: 4
   isAttacking: 0
 --- !u!50 &3039633047729713377
 Rigidbody2D:

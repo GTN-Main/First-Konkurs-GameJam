@@ -35,13 +35,13 @@ public class AttackState : EnemyMovementState
 
         if (mustBeCloser)
             // Attack (move towards the target)
-            context.GetEnemy().Move(dirForward * context.getIdleWalkingSpeed * Time.deltaTime);
+            context.GetEnemy().Move(dirForward * context.getIdleWalkingSpeed * Time.fixedDeltaTime);
         else
         {
             if (attackCooldown <= 0f)
                 Attack();
             else
-                attackCooldown -= Time.deltaTime;
+                attackCooldown -= Time.fixedDeltaTime;
         }
 
         /*
@@ -49,14 +49,14 @@ public class AttackState : EnemyMovementState
         context
             .GetCharacterController()
             .Move(
-                -dirForward * context.getIdleWalkingSpeed * Time.deltaTime
-                    + Vector3.down * Time.deltaTime
+                -dirForward * context.getIdleWalkingSpeed * Time.fixedDeltaTime
+                    + Vector3.down * Time.fixedDeltaTime
             );
         */
 
         EnemyMovementContext.ERing currentRing = context.GetCurrentRingByPosition();
         context.DebugDrawRings(currentRing);
-        context.UpdateTimers(Time.deltaTime, currentRing);
+        context.UpdateTimers(Time.fixedDeltaTime, currentRing);
     }
 
     void Attack()

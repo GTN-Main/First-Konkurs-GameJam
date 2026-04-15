@@ -73,19 +73,19 @@ public class IdleState : EnemyMovementState
             Mathf.PerlinNoise1D(context.timerOfCurrentState * context.getIdleStandingRapidness)
             < context.getIdleStandingThreshold
         )
-            acceleration = Mathf.MoveTowards(acceleration, 0f, Time.deltaTime);
+            acceleration = Mathf.MoveTowards(acceleration, 0f, Time.fixedDeltaTime);
         else
-            acceleration = Mathf.MoveTowards(acceleration, 1f, Time.deltaTime);
+            acceleration = Mathf.MoveTowards(acceleration, 1f, Time.fixedDeltaTime);
 
         dirForward = Vector3.RotateTowards(
             dirForward,
             vNext,
-            context.getIdleRotationSpeed * acceleration * Time.deltaTime,
+            context.getIdleRotationSpeed * acceleration * Time.fixedDeltaTime,
             0f
         );
         context
             .GetEnemy()
-            .Move(acceleration * dirForward * context.getIdleWalkingSpeed * Time.deltaTime);
+            .Move(acceleration * dirForward * context.getIdleWalkingSpeed * Time.fixedDeltaTime);
 
         Debug.DrawRay(context.transform.position, dirForward, Color.cyan);
 
@@ -93,7 +93,7 @@ public class IdleState : EnemyMovementState
 
         EnemyMovementContext.ERing currentRing = context.GetCurrentRingByPosition();
         context.DebugDrawRings(currentRing);
-        context.UpdateTimers(Time.deltaTime, currentRing);
+        context.UpdateTimers(Time.fixedDeltaTime, currentRing);
     }
 
     public override void ExitState()

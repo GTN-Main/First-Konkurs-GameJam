@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
@@ -10,9 +11,6 @@ public class GrenadeExplode : MonoBehaviour
 
     [SerializeField]
     private float explosionDamage = 50f;
-
-    [SerializeField]
-    private float explosionDelay = 2f;
 
     [SerializeField]
     Vector2 movementVector = Vector2.zero;
@@ -49,11 +47,12 @@ public class GrenadeExplode : MonoBehaviour
 
     Rigidbody2D rb;
 
+    Vector2 startPosition;
+
     public void Init(
         Vector2 position,
         float explosionRadius,
         float explosionDamage,
-        float explosionDelay,
         Vector2 movementVector,
         float movementDistance,
         float movementTime,
@@ -62,9 +61,9 @@ public class GrenadeExplode : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         transform.position = position;
+        startPosition = position;
         this.explosionRadius = explosionRadius;
         this.explosionDamage = explosionDamage;
-        this.explosionDelay = explosionDelay;
         this.movementVector = movementVector;
         this.movementDistance = movementDistance;
         this.movementTime = movementTime;
@@ -109,10 +108,17 @@ public class GrenadeExplode : MonoBehaviour
         Explode();
     }
 
+    public void OnDrawGizmos()
+    {
+        Vector2 targetPosition = startPosition + movementVector.normalized * movementDistance;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(targetPosition, explosionRadius);
+        Gizmos.DrawWireSphere(targetPosition, explosionRadius * aspectRatioSize.y / aspectRatioSize.x);
+    }
+
     IEnumerator MoveRoutine()
     {
         float elapsedTime = 0f;
-        Vector2 startPosition = transform.position;
         Vector2 targetPosition = startPosition + movementVector.normalized * movementDistance;
         Debug.Log(
             $"Moving grenade from {startPosition} to {targetPosition} over {movementTime} seconds."
@@ -140,10 +146,16 @@ public class GrenadeExplode : MonoBehaviour
 
     async Task Explode()
     {
-        await Task.Delay(Mathf.RoundToInt(explosionDelay * 1000));
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(
+        var c = this.AddComponent<CapsuleCollider2D>();
+        c.direction = CapsuleDirection2D.Horizontal;
+        c.size = new Vector2(explosionRadius*2f+0.1f, explosionRadius*2f * aspectRatioSize.y / aspectRatioSize.x+0.1f);
+        c.isTrigger = true;
+        await Task.Delay(Mathf.RoundToInt(movementTime * 1000));
+        Collider2D[] hitColliders = Physics2D.OverlapCapsuleAll(
             transform.position,
-            explosionRadius,
+            new Vector2(explosionRadius*2f+0.1f, explosionRadius*2f * aspectRatioSize.y / aspectRatioSize.x+0.1f),
+            CapsuleDirection2D.Horizontal,
+            0,
             damageableLayers
         );
         foreach (Collider2D hitCollider in hitColliders)
@@ -179,9 +191,9 @@ public class GrenadeExplode : MonoBehaviour
 
         maxRadiusImageT.localScale = Vector2.one * aspectRatioSize * maxDiameter;
 
-        while (elapsedTime < explosionDelay)
+        while (elapsedTime < movementTime)
         {
-            float t = elapsedTime / explosionDelay;
+            float t = elapsedTime / movementTime;
             float currentDiameter = Mathf.Lerp(0f, maxDiameter, t);
 
             fillImageT.localScale = Vector2.one * aspectRatioSize * currentDiameter;
@@ -199,9 +211,9 @@ public class GrenadeExplode : MonoBehaviour
 
         float elapsedTime = 0f;
 
-        while (elapsedTime < explosionDelay)
+        while (elapsedTime < movementTime)
         {
-            float t = elapsedTime / explosionDelay;
+            float t = elapsedTime / movementTime;
             Vector2 pos = Vector2.Lerp(flameStartPos, flameEndPos, t);
 
             flameImageT.localPosition = pos;

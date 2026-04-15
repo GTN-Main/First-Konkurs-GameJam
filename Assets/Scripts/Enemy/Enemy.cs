@@ -86,11 +86,10 @@ public class Enemy : MonoBehaviour
         }
         Debug.DrawRay(transform.position, separationVector * separationStrength, Color.white);*/
 
-        Vector2 velocityNormalized = _localdesiredVelocity.normalized;
-        //Vector2 finalVelocity = MovementPrinciples.GetAdjustedMovementCapsule(transform, velocityNormalized, capsule, 0.05f, LayerMask.GetMask("Obstacle")) * _localdesiredVelocity.magnitude;
+        Vector2 finalVelocity = MovementPrinciples.GetAdjustedMovementCapsule(transform, _localdesiredVelocity, capsule, 0.05f, LayerMask.GetMask("Obstacle")) * _localdesiredVelocity.magnitude;
         rb.linearVelocity = Vector2.Lerp(
             rb.linearVelocity,
-            _localdesiredVelocity,
+            finalVelocity,
             Time.fixedDeltaTime * 15f
         );
         Debug.DrawRay(transform.position, _localdesiredVelocity, Color.green);

@@ -46,6 +46,8 @@ public class Paintball : MonoBehaviour
 
     Rigidbody2D rb;
 
+    Vector2 startPosition;
+
     public void Init(
         Vector2 position,
         float explosionRadius,
@@ -58,6 +60,7 @@ public class Paintball : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         transform.position = position;
+        startPosition = position;
         this.explosionRadius = explosionRadius;
         this.explosionDamage = explosionDamage;
         this.movementVector = movementVector;
@@ -103,10 +106,18 @@ public class Paintball : MonoBehaviour
         VisualizeHeight();
     }
 
+
+    public void OnDrawGizmos()
+    {
+        Vector2 targetPosition = startPosition + movementVector.normalized * movementDistance;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(targetPosition, explosionRadius);
+        Gizmos.DrawWireSphere(targetPosition, explosionRadius*aspectRatioSize.y/aspectRatioSize.x);
+    }
+
     IEnumerator MoveRoutine()
     {
         float elapsedTime = 0f;
-        Vector2 startPosition = transform.position;
         Vector2 targetPosition = startPosition + movementVector.normalized * movementDistance;
         Debug.Log(
             $"Moving paintball from {startPosition} to {targetPosition} over {movementTime} seconds."
@@ -135,9 +146,11 @@ public class Paintball : MonoBehaviour
 
     async Task Explode()
     {
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(
+        Collider2D[] hitColliders = Physics2D.OverlapCapsuleAll(
             transform.position,
-            explosionRadius,
+            new Vector2(explosionRadius*2f-0.1f, explosionRadius*2f * aspectRatioSize.y / aspectRatioSize.x-0.1f),
+            CapsuleDirection2D.Horizontal,
+            0,
             damageableLayers
         );
         foreach (Collider2D hitCollider in hitColliders)
@@ -149,6 +162,7 @@ public class Paintball : MonoBehaviour
             HealthManager.Instance.DamagePlayer(playerTag, explosionDamage);
         }
 
+        MyParticleSystem.Instance.DoEffect("Paint", transform.position, 2f);
         MyAudioEffects.Instance.DoEffect("PaintExplosion", transform.position, 1f);
 
         Destroy(gameObject);
@@ -156,7 +170,6 @@ public class Paintball : MonoBehaviour
 
     async Task VisualizeExplosionRadius()
     {
-        Vector2 startPosition = transform.position;
         Vector2 targetPosition = startPosition + movementVector.normalized * movementDistance;
         if (maxRadiusImageT == null)
         {

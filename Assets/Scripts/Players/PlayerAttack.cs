@@ -67,9 +67,8 @@ public class PlayerAttack : MonoBehaviour
                     : 0f;
             granadeEx.Init(
                 transform.position,
-                explosionRadius: 5f,
+                explosionRadius: 4f,
                 explosionDamage: 50f,
-                explosionDelay: 2f,
                 movementVector: targetDirection,
                 movementDistance: distanceToEnemy,
                 movementTime: 1f,

@@ -385,7 +385,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GrenadeExplode
   explosionRadius: 5
   explosionDamage: 50
-  explosionDelay: 2
   movementVector: {x: 0, y: 0}
   movementDistance: 5
   movementTime: 5

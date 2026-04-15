@@ -60,11 +60,11 @@ public class EnemyAttack : MonoBehaviour
                     : 0f;
             paintball.Init(
                 transform.position,
-                explosionRadius: 1f,
+                explosionRadius: 2f,
                 explosionDamage: 10,
                 movementVector: targetDirection,
                 movementDistance: distanceToEnemy,
-                movementTime: 1f,
+                movementTime: 1.2f,
                 damageableLayers: LayerMask.GetMask("Players")
             );
 

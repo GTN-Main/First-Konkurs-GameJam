@@ -61,23 +61,23 @@ public class KeepSafeDistanceState : EnemyMovementState
             context
                 .GetEnemy()
                 .Move(
-                    (-dirForward + rightPositioning * dirRight)
+                    (-dirForward + rightPositioning * dirRight).normalized
                         * context.getIdleWalkingSpeed
-                        * Time.deltaTime
+                        * Time.fixedDeltaTime
                 );
         else
             // Approach (pull in)
             context
                 .GetEnemy()
                 .Move(
-                    (dirForward + rightPositioning * dirRight)
+                    (dirForward + rightPositioning * dirRight).normalized
                         * context.getIdleWalkingSpeed
-                        * Time.deltaTime
+                        * Time.fixedDeltaTime
                 );
 
         EnemyMovementContext.ERing currentRing = context.GetCurrentRingByPosition();
         context.DebugDrawRings(currentRing);
-        context.UpdateTimers(Time.deltaTime, currentRing);
+        context.UpdateTimers(Time.fixedDeltaTime, currentRing);
     }
 
     public override void ExitState()
