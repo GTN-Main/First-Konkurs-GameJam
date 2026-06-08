@@ -142,6 +142,13 @@ MonoBehaviour:
   player1InputAsset_defaultMap: Player
   player2InputAsset: {fileID: -944628639613478452, guid: 2dd628925de831149b08bb4ce1165a52, type: 3}
   player2InputAsset_defaultMap: Player
+  player1Joystick: {fileID: 7546685838437308450}
+  player2Joystick: {fileID: 8204779714866808873}
+  interfaceButtons: {fileID: 1842715172665212465}
+  interactButtonPlayer1: {fileID: 2004190678692336288}
+  interactButtonPlayer2: {fileID: 6042430601377431243}
+  attackButtonPlayer1: {fileID: 4176441123729486441}
+  attackButtonPlayer2: {fileID: 8996686513640756259}
 --- !u!1 &829043009589924282
 GameObject:
   m_ObjectHideFlags: 0
@@ -2727,14 +2734,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1365261153344470985}
     m_Modifications:
-    - target: {fileID: 1173933631040241348, guid: 29339b46dace042428c3319e4befc135, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1390761345554035970, guid: 29339b46dace042428c3319e4befc135, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1512849317812718762, guid: 29339b46dace042428c3319e4befc135, type: 3}
       propertyPath: m_Name
       value: GlobalCanvas
@@ -2819,19 +2818,88 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7373885840090901319, guid: 29339b46dace042428c3319e4befc135, type: 3}
+    - target: {fileID: 7175763935396842025, guid: 29339b46dace042428c3319e4befc135, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 1390761345554035970, guid: 29339b46dace042428c3319e4befc135, type: 3}
-    - {fileID: 1173933631040241348, guid: 29339b46dace042428c3319e4befc135, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29339b46dace042428c3319e4befc135, type: 3}
+--- !u!1 &1842715172665212465 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7175763935396842025, guid: 29339b46dace042428c3319e4befc135, type: 3}
+  m_PrefabInstance: {fileID: 8793222096173790232}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2004190678692336288 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7050275427756467896, guid: 29339b46dace042428c3319e4befc135, type: 3}
+  m_PrefabInstance: {fileID: 8793222096173790232}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247e818cd1fdcef44b83c943f56043c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPresser
 --- !u!224 &3859651824853818965 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5735316579853560397, guid: 29339b46dace042428c3319e4befc135, type: 3}
   m_PrefabInstance: {fileID: 8793222096173790232}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4176441123729486441 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4896116462876837489, guid: 29339b46dace042428c3319e4befc135, type: 3}
+  m_PrefabInstance: {fileID: 8793222096173790232}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247e818cd1fdcef44b83c943f56043c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPresser
+--- !u!114 &6042430601377431243 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3016508460037622483, guid: 29339b46dace042428c3319e4befc135, type: 3}
+  m_PrefabInstance: {fileID: 8793222096173790232}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247e818cd1fdcef44b83c943f56043c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPresser
+--- !u!114 &7546685838437308450 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1350229009120308282, guid: 29339b46dace042428c3319e4befc135, type: 3}
+  m_PrefabInstance: {fileID: 8793222096173790232}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45977bbae16431c46a013576a1aea384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8204779714866808873 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 854266961465080881, guid: 29339b46dace042428c3319e4befc135, type: 3}
+  m_PrefabInstance: {fileID: 8793222096173790232}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45977bbae16431c46a013576a1aea384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8996686513640756259 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 494668493700407355, guid: 29339b46dace042428c3319e4befc135, type: 3}
+  m_PrefabInstance: {fileID: 8793222096173790232}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247e818cd1fdcef44b83c943f56043c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPresser

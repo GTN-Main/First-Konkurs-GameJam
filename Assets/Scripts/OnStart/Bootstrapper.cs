@@ -8,7 +8,7 @@ public static class Bootstrapper
     {
         DebugUtility.WriteInColor($"Bootstrapping...", Color.green);
         await Create();
-        await LoadData();
+        //await LoadData();
         await Init();
     }
 

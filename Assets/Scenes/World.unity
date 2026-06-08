@@ -1799,6 +1799,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScreenSpaceCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8904233763825158526, guid: 1ee59fb037fe595428b4d32acc3704b6, type: 3}
+      propertyPath: marginFromScreenEdge
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

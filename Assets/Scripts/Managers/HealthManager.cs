@@ -74,12 +74,11 @@ public class HealthManager : MonoBehaviour, IInitializable
             ShowHealthUI();
         }
         else
-        {
             HideHealthUI();
-        }
 
         if (state.GetTag() == GameManager.GameStateTag.WonGame)
         {
+            HideHealthUI();
             player1Health.OnPlayerDied -= OnOnePlayerDied;
             player2Health.OnPlayerDied -= OnOnePlayerDied;
             player1Health = null;
@@ -224,7 +223,8 @@ public class HealthManager : MonoBehaviour, IInitializable
 
     public void OnOnePlayerDied(PlayerTag playerTag)
     {
-        // Handle game over logic (e.g., show game over screen, reset the game, etc.)
+        HideHealthUI();
+        
         player1Health.OnPlayerDied -= OnOnePlayerDied;
         player2Health.OnPlayerDied -= OnOnePlayerDied;
         player1Health = null;

@@ -35,6 +35,7 @@ public class PlayerInputListener : MonoBehaviour
         {
             var actionMap = GetActionsForPlayer(playerTag);
             playerInputs[playerTag].SetActionMap(actionMap);
+            playerInputs[playerTag].SetPlayerTag(playerTag);
         }
     }
 
@@ -81,6 +82,12 @@ public class PlayerInputData
     InputAction move_action;
     InputAction interact_action;
     InputAction attack_action;
+    PlayerTag playerTag;
+
+    public void SetPlayerTag(PlayerTag tag)
+    {
+        playerTag = tag;
+    }
 
     public void SetActionMap(InputActionMap Action)
     {
@@ -91,19 +98,17 @@ public class PlayerInputData
     }
 
     #region Movement properties
-    public bool up => move_action != null ? move_action.ReadValue<Vector2>().y > 0 : false;
-    public bool right => move_action != null ? move_action.ReadValue<Vector2>().x > 0 : false;
-    public bool down => move_action != null ? move_action.ReadValue<Vector2>().y < 0 : false;
-    public bool left => move_action != null ? move_action.ReadValue<Vector2>().x < 0 : false;
     public Vector2 direction =>
-        move_action != null ? move_action.ReadValue<Vector2>() : Vector2.zero;
+    InputManager.Instance.JoystickHasValue(playerTag) ?
+    InputManager.Instance.GetJoystickPosition(playerTag) : 
+    move_action != null ? move_action.ReadValue<Vector2>() : Vector2.zero;
     #endregion
 
     #region Interaction properties
-    public bool interact => interact_action != null ? interact_action.IsPressed() : false;
+    public bool interact => InputManager.Instance.GetInteractButtonState(playerTag) || (interact_action != null ? interact_action.IsPressed() : false);
     #endregion
 
     #region Attack properties
-    public bool attack => attack_action != null ? attack_action.IsPressed() : false;
+    public bool attack => InputManager.Instance.GetAttackButtonState(playerTag) || (attack_action != null ? attack_action.IsPressed() : false);
     #endregion
 }
