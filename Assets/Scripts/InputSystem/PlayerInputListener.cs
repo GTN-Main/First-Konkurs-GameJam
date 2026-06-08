@@ -99,16 +99,21 @@ public class PlayerInputData
 
     #region Movement properties
     public Vector2 direction =>
-    InputManager.Instance.JoystickHasValue(playerTag) ?
-    InputManager.Instance.GetJoystickPosition(playerTag) : 
-    move_action != null ? move_action.ReadValue<Vector2>() : Vector2.zero;
+        InputManager.Instance.JoystickHasValue(playerTag)
+            ? InputManager.Instance.GetJoystickPosition(playerTag)
+        : move_action != null ? move_action.ReadValue<Vector2>()
+        : Vector2.zero;
     #endregion
 
     #region Interaction properties
-    public bool interact => InputManager.Instance.GetInteractButtonState(playerTag) || (interact_action != null ? interact_action.IsPressed() : false);
+    public bool interact =>
+        InputManager.Instance.GetInteractButtonState(playerTag)
+        || (interact_action != null ? interact_action.IsPressed() : false);
     #endregion
 
     #region Attack properties
-    public bool attack => InputManager.Instance.GetAttackButtonState(playerTag) || (attack_action != null ? attack_action.IsPressed() : false);
+    public bool attack =>
+        InputManager.Instance.GetAttackButtonState(playerTag)
+        || (attack_action != null ? attack_action.IsPressed() : false);
     #endregion
 }

@@ -6,8 +6,10 @@ public class ButtonPresser : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 {
     [SerializeField]
     Image buttonImage;
+
     [SerializeField]
     Color normalColor = Color.white;
+
     [SerializeField]
     Color pressedColor = Color.gray;
     private bool isPressed = false;

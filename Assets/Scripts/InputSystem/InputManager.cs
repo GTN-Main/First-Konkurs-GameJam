@@ -48,6 +48,7 @@ public class InputManager : MonoBehaviour
 
     [SerializeField]
     private ButtonPresser attackButtonPlayer1;
+
     [SerializeField]
     private ButtonPresser attackButtonPlayer2;
 

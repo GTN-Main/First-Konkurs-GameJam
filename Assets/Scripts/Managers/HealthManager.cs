@@ -224,7 +224,7 @@ public class HealthManager : MonoBehaviour, IInitializable
     public void OnOnePlayerDied(PlayerTag playerTag)
     {
         HideHealthUI();
-        
+
         player1Health.OnPlayerDied -= OnOnePlayerDied;
         player2Health.OnPlayerDied -= OnOnePlayerDied;
         player1Health = null;
